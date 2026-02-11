@@ -138,8 +138,8 @@ export default function Hero() {
           <button className="relative group">
             <div className="absolute inset-0 rounded-full bg-[#FF8656] transition-transform group-hover:scale-110" />
             <div className="relative flex flex-col items-center justify-center w-32 h-32 rounded-full border-2 border-[#FF8656] bg-black text-[#FF8656] transition-colors group-hover:text-white">
-              <span className="font-medium">CONTACTEZ</span>
-              <span className="font-medium">MOI</span>
+              <span className="font-archivo font-black text-sm">CONTACTEZ</span>
+              <span className="font-archivo font-black text-sm">MOI</span>
             </div>
           </button>
         </motion.div>

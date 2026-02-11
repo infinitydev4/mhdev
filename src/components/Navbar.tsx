@@ -56,7 +56,12 @@ export default function Navbar() {
           <Link href="#experience" onClick={(e) => handleAnchorClick(e, '#experience')} className="font-protest hover:text-[#C1FF00] transition-colors">Process</Link>
           <Link href="#temoignages" onClick={(e) => handleAnchorClick(e, '#temoignages')} className="font-protest hover:text-[#C1FF00] transition-colors">Témoignages</Link>
           <Link href="#contact" onClick={(e) => handleAnchorClick(e, '#contact')} className="font-protest hover:text-[#C1FF00] transition-colors">FAQ</Link>
-          <Link href="/cv" className="font-protest hover:text-[#C1FF00] transition-colors">CV</Link>
+          <Link href="/cv" className="relative group">
+            <div className="absolute inset-0 rounded-full bg-[#FF8656] blur-md opacity-50 transition-all group-hover:opacity-75 group-hover:blur-lg" />
+            <div className="relative flex items-center justify-center w-8 h-8 rounded-full border-2 border-[#FF8656] bg-black text-[#FF8656] transition-all group-hover:text-white group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-[#FF8656]/50">
+              <span className="font-protest text-xs">CV</span>
+            </div>
+          </Link>
         </div>
 
         {/* Placeholder for mobile (right side) */}

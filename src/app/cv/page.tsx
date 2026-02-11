@@ -172,7 +172,7 @@ export default function CVPage() {
                     </div>
                     <div className="flex items-center gap-2">
                       <Globe size={14} className="text-[#C1FF00] flex-shrink-0" />
-                      <span>www.webconcepter.fr</span>
+                      <span>www.mhdev.xyz</span>
                     </div>
                   </div>
                 </div>
