@@ -114,7 +114,7 @@ export default function CVPage() {
           <div className="border-b-2 border-[#8364FF] pb-3 mb-3">
             <div className="flex flex-col md:flex-row items-start gap-4">
               {/* Photo + Nom */}
-              <div className="flex items-center gap-4 flex-1">
+              <div className="flex items-center gap-4 flex-1 mt-4">
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -143,7 +143,7 @@ export default function CVPage() {
                 </motion.div>
 
                 {/* Nom et titre */}
-                <div className="flex-1">
+                <div className="flex-1 -mt-2">
                   <h1 className="font-archivo text-3xl md:text-4xl font-black text-[#C1FF00] mb-1">
                     MOHAMED OULLAMI
                   </h1>

@@ -6,6 +6,7 @@ import { FC } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Code2, Database, Cloud, Users } from 'lucide-react'
+import { Terminal, TypingAnimation, AnimatedSpan } from './ui/terminal'
 
 // Type pour les icônes
 type TimelineItemProps = {
@@ -125,28 +126,59 @@ export default function AboutSection() {
               className="object-contain"
             />
             <div className="absolute right-4 top-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#FF8656]">
-              <div className="h-0 w-0 border-l-[12px] border-t-[8px] border-b-[8px] border-l-white border-t-transparent border-b-transparent" />
+              <Code2 size={24} className="text-white" />
             </div>
           </motion.div>
 
-          {/* Colonne droite */}
+          {/* Colonne droite - Terminal animé */}
           <motion.div 
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: false }}
             transition={{ duration: 0.6, delay: 0.5 }}
-            className="space-y-4 text-gray-400"
+            className="text-gray-400"
           >
-            <div className="bg-black/50 p-4 rounded-lg border border-[#8364FF]/30">
-              <p className="font-bold text-[#C1FF00] mb-2">Expert en bonnes pratiques</p>
-              <p>
-                TDD (Test-Driven Development), Clean Architecture, SOLID et méthodologies DevOps modernes.
-              </p>
-              <p className="mt-4">
-                Expérience en formation et mentorat technique chez Digital College (2024-2025), 
-                transmission des bonnes pratiques d'architecture et de déploiement.
-              </p>
-            </div>
+            <Terminal className="max-w-full max-h-[500px] border-[#8364FF]/50 bg-black/80">
+              <TypingAnimation className="text-[#C1FF00] font-bold text-sm" duration={40}>
+                $ cat bonnes-pratiques.md
+              </TypingAnimation>
+
+              <AnimatedSpan className="text-[#C1FF00] font-bold text-sm mt-2">
+                &gt; Expert en bonnes pratiques
+              </AnimatedSpan>
+
+              <AnimatedSpan className="text-gray-300 text-xs mt-1">
+                TDD (Test-Driven Development)
+              </AnimatedSpan>
+              <AnimatedSpan className="text-gray-300 text-xs">
+                Clean Architecture &amp; SOLID
+              </AnimatedSpan>
+              <AnimatedSpan className="text-gray-300 text-xs">
+                Méthodologies DevOps modernes
+              </AnimatedSpan>
+
+              <TypingAnimation className="text-[#8364FF] font-bold text-sm mt-3" duration={40}>
+                $ cat experience-formation.md
+              </TypingAnimation>
+
+              <AnimatedSpan className="text-[#C1FF00] font-bold text-sm mt-2">
+                &gt; Digital College (2024-2025)
+              </AnimatedSpan>
+
+              <AnimatedSpan className="text-gray-300 text-xs mt-1">
+                Formation &amp; mentorat technique
+              </AnimatedSpan>
+              <AnimatedSpan className="text-gray-300 text-xs">
+                Architecture &amp; déploiement
+              </AnimatedSpan>
+              <AnimatedSpan className="text-gray-300 text-xs">
+                Transmission des bonnes pratiques
+              </AnimatedSpan>
+
+              <TypingAnimation className="text-green-400 text-xs mt-3" duration={30}>
+                ✔ Toutes les compétences chargées avec succès.
+              </TypingAnimation>
+            </Terminal>
           </motion.div>
         </motion.div>
 

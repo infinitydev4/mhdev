@@ -10,7 +10,7 @@ export const projects: Project[] = [
     {
       id: 1,
       title: 'TRAIL-ASSISTANCE',
-      subtitle: 'ASSISTANCE TRAIL',
+      subtitle: 'PWA ASSISTANCE TRAIL',
       category: 'landing page',
       image: '/images/realisations/35.png'
     },
