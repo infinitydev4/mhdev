@@ -172,7 +172,7 @@ const TechStackSection: FC = () => {
         >
           <div className="inline-block rounded-lg border-2 border-dashed border-[#8364FF] bg-black/50 px-8 py-4">
             <p className="font-archivo text-gray-400">
-              <span className="text-[#C1FF00] font-bold">+15 ans</span> d&apos;expertise en développement fullstack
+              <span className="text-[#C1FF00] font-bold">+7 ans</span> d&apos;expertise en développement fullstack
             </p>
           </div>
         </motion.div>
