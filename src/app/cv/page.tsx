@@ -166,24 +166,34 @@ export default function CVPage() {
               <div className="border-2 border-[#8364FF] rounded-lg overflow-hidden bg-gradient-to-b from-[#8364FF]/10 to-transparent w-full md:w-auto">
                 <WindowHeader title="CONTACT" variant="violet" />
                 <div className="p-2 md:min-w-[200px]">
-                  <div className="flex flex-col gap-1.5 text-xs text-gray-300 font-mono">
-                    <div className="flex items-center gap-2">
-                      <MapPin size={14} className="text-[#C1FF00] flex-shrink-0" />
-                      <span>Nantes, France</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Phone size={14} className="text-[#C1FF00] flex-shrink-0" />
-                      <span>+33 7 67 03 68 48</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Mail size={14} className="text-[#C1FF00] flex-shrink-0" />
-                      <span>m.oullami@outlook.fr</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Globe size={14} className="text-[#C1FF00] flex-shrink-0" />
-                      <span>www.mhdev.xyz</span>
-                    </div>
-                  </div>
+                  <table className="w-full border-collapse text-xs text-gray-300 font-mono">
+                    <tbody>
+                      <tr className="pdf-contact-row">
+                        <td className="align-middle pb-1.5">
+                          <span className="inline-block align-middle mr-2" style={{ width: '14px', height: '14px' }}><MapPin size={14} className="text-[#C1FF00]" /></span>
+                          <span className="align-middle">Nantes, France</span>
+                        </td>
+                      </tr>
+                      <tr className="pdf-contact-row">
+                        <td className="align-middle pb-1.5">
+                          <span className="inline-block align-middle mr-2" style={{ width: '14px', height: '14px' }}><Phone size={14} className="text-[#C1FF00]" /></span>
+                          <span className="align-middle">+33 7 67 03 68 48</span>
+                        </td>
+                      </tr>
+                      <tr className="pdf-contact-row">
+                        <td className="align-middle pb-1.5">
+                          <span className="inline-block align-middle mr-2" style={{ width: '14px', height: '14px' }}><Mail size={14} className="text-[#C1FF00]" /></span>
+                          <span className="align-middle">m.oullami@outlook.fr</span>
+                        </td>
+                      </tr>
+                      <tr className="pdf-contact-row">
+                        <td className="align-middle">
+                          <span className="inline-block align-middle mr-2" style={{ width: '14px', height: '14px' }}><Globe size={14} className="text-[#C1FF00]" /></span>
+                          <span className="align-middle">www.mhdev.xyz</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
@@ -568,6 +578,10 @@ export default function CVPage() {
           display: inline-block !important;
           vertical-align: middle !important;
           transform: translateY(5px) !important;
+        }
+
+        .pdf-capture-mode .pdf-contact-row span.inline-block {
+          transform: translateY(3px) !important;
         }
 
         @media print {
