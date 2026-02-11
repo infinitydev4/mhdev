@@ -48,7 +48,7 @@ export default function Navbar() {
 
         {/* Centered logo */}
         <Link href="/" className="font-archivo text-2xl font-bold absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          MOH<span className="font-protest text-[#C1FF00]">DEV</span>
+          MH<span className="font-protest text-[#C1FF00]">DEV</span>
         </Link>
 
         {/* Desktop menu (right side) */}
