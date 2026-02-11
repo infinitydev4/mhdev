@@ -113,13 +113,15 @@ export default function Hero() {
         className="relative"
       >
         <div className="relative w-full aspect-square">
-          <Image
-            src="/images/moh-hero.png"
-            alt="Mohamed - Développeur Fullstack"
-            fill
-            className="object-contain"
-            priority
-          />
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-contain"
+          >
+            <source src="/images/mhdev-loop.mp4" type="video/mp4" />
+          </video>
         </div>
 
         <motion.div 
