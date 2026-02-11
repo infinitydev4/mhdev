@@ -5,7 +5,7 @@
 import { FC } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Code2, Laptop, Database, Smartphone, Cloud, Users } from 'lucide-react'
+import { Code2, Database, Cloud, Users } from 'lucide-react'
 
 // Type pour les icônes
 type TimelineItemProps = {

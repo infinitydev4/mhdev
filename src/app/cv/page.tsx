@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Download, Mail, Phone, MapPin, Globe, Linkedin, Github } from 'lucide-react'
+import { Download, Mail, Phone, MapPin, Globe } from 'lucide-react'
 import { Button3D } from '@/components/ui/Button3D'
 import { useRef } from 'react'
 

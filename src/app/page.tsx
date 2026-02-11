@@ -8,7 +8,6 @@ import ProcessSection from "@/components/process-section"
 import TestimonialsSection from "@/components/testimonials-section"
 import FAQSection from "@/components/faq-section"
 import Footer from "@/components/footer"
-import PackagesSection from "@/components/packages-section"
 
 export default function Home() {
   return (
