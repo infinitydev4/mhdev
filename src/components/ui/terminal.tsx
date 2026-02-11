@@ -101,13 +101,9 @@ export const TypingAnimation = ({
     throw new Error("TypingAnimation: children must be a string. Received:")
   }
 
-  const MotionComponent = useMemo(
-    () =>
-      motion.create(Component as any, {
-        forwardMotionProps: true,
-      }),
-    [Component]
-  )
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  const MotionComponent = motion(Component as any) as any
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 
   const [displayedText, setDisplayedText] = useState<string>("")
   const [started, setStarted] = useState(false)
