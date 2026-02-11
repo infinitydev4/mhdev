@@ -1,0 +1,595 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { Download, Mail, Phone, MapPin, Globe, Linkedin, Github } from 'lucide-react'
+import { Button3D } from '@/components/ui/Button3D'
+import { useRef } from 'react'
+
+export default function CVPage() {
+  const cvRef = useRef<HTMLDivElement>(null)
+
+  const handleDownload = async () => {
+    if (!cvRef.current) return
+
+    try {
+      const html2canvas = (await import('html2canvas')).default
+      const jsPDF = (await import('jspdf')).default
+
+      // Capture le CV en image avec meilleurs paramètres
+      const canvas = await html2canvas(cvRef.current, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#000000',
+        windowWidth: cvRef.current.scrollWidth,
+        windowHeight: cvRef.current.scrollHeight,
+      })
+
+      const imgData = canvas.toDataURL('image/png', 1.0)
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      })
+
+      const pdfWidth = 210 // A4 width in mm
+      const pdfHeight = 297 // A4 height in mm
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width
+
+      // Toujours utiliser toute la largeur A4
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, imgHeight)
+
+      pdf.save('Mohamed_Oullami_CV.pdf')
+    } catch (error) {
+      console.error('Erreur lors de la génération du PDF:', error)
+      // Fallback sur l'impression
+      window.print()
+    }
+  }
+
+  return (
+    <main className="relative min-h-screen bg-black text-white">
+      <div className="container mx-auto max-w-4xl px-4 py-6">
+        {/* Download Button */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-4 flex justify-end print:hidden"
+        >
+          <Button3D onClick={handleDownload}>
+            <span className="flex items-center gap-2 font-protest">
+              <Download size={20} />
+              TÉLÉCHARGER CV
+            </span>
+          </Button3D>
+        </motion.div>
+
+        {/* CV Container */}
+        <motion.div
+          ref={cvRef}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-black border-2 border-[#8364FF] rounded-lg p-4 print:border-0"
+        >
+          {/* Header */}
+          <div className="border-b-2 border-[#8364FF] pb-3 mb-3">
+            <div className="flex flex-col md:flex-row items-center gap-4">
+              {/* Photo */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+                className="relative w-32 h-32 flex-shrink-0"
+              >
+                {/* Cercle de fond avec bordure */}
+                <div className="absolute inset-0 rounded-full border-4 border-[#8364FF] shadow-lg shadow-[#8364FF]/50 bg-black"></div>
+                
+                {/* Image qui dépasse */}
+                <div className="relative w-full h-full overflow-visible">
+                  <img
+                    src="/images/mohamed-dev.png"
+                    alt="Mohamed Oullami"
+                    className="absolute -bottom-5 left-[4.2rem] -translate-x-1/2 object-contain"
+                    style={{ 
+                      width: '150px',
+                      height: '190px',
+                      maxWidth: 'none'
+                    }}
+                  />
+                </div>
+                
+                {/* Effet de brillance */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-[#C1FF00]/20 to-transparent pointer-events-none"></div>
+              </motion.div>
+
+              {/* Info */}
+              <div className="flex-1 text-center md:text-left">
+                <h1 className="font-archivo text-3xl md:text-4xl font-black text-[#C1FF00] mb-1">
+                  MOHAMED OULLAMI
+                </h1>
+                <h2 className="font-protest text-lg md:text-xl text-[#8364FF] mb-3">
+                  Développeur Fullstack Ruby on Rails Confirmé
+                </h2>
+                
+                {/* Contact Info */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-300">
+                  <div className="flex items-center gap-2 justify-center md:justify-start">
+                    <MapPin size={16} className="text-[#C1FF00]" />
+                    <span>Nantes, France</span>
+                  </div>
+                  <div className="flex items-center gap-2 justify-center md:justify-start">
+                    <Phone size={16} className="text-[#C1FF00]" />
+                    <span>+33 7 67 03 68 48</span>
+                  </div>
+                  <div className="flex items-center gap-2 justify-center md:justify-start">
+                    <Mail size={16} className="text-[#C1FF00]" />
+                    <span>m.oullami@outlook.fr</span>
+                  </div>
+                  <div className="flex items-center gap-2 justify-center md:justify-start">
+                    <Globe size={16} className="text-[#C1FF00]" />
+                    <span>www.webconcepter.fr</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Profile */}
+          <section className="mb-3">
+            <div className="border-2 border-[#C1FF00] rounded-lg overflow-hidden bg-gradient-to-b from-[#C1FF00]/10 to-transparent">
+              <div className="bg-[#C1FF00] px-3 py-1.5 flex items-center">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1 items-center">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                  </div>
+                  <span className="font-protest text-xs text-black leading-none">PROFIL</span>
+                </div>
+              </div>
+              <div className="p-2">
+                <p className="text-gray-300 leading-tight text-xs">
+                  Développeur Fullstack Ruby on Rails confirmé avec plus de 15 ans d&apos;expérience dans la conception 
+                  d&apos;applications SaaS performantes. Spécialisé en architecture API-first, optimisation backend et 
+                  mise en production de solutions scalables. Expert en bonnes pratiques (TDD, Clean Architecture, SOLID) 
+                  et méthodologies DevOps modernes.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Experience */}
+          <section className="mb-3">
+            <h3 className="font-protest text-lg text-[#FF8656] mb-1.5 border-b border-[#8364FF]/30 pb-1">
+              EXPÉRIENCES PROFESSIONNELLES
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+              {/* WebConcepter */}
+              <div className="border-2 border-[#8364FF] rounded-lg overflow-hidden bg-gradient-to-b from-[#8364FF]/10 to-transparent">
+                <div className="bg-[#8364FF] px-3 py-1.5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1 items-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">WEBCONCEPTER</span>
+                  </div>
+                  <span className="text-xs font-protest text-black leading-none">2018-2026</span>
+                </div>
+                <div className="p-1.5">
+                  <p className="text-[10px] text-gray-400 mb-0.5">Freelance - Développeur Fullstack Ruby on Rails</p>
+                  <ul className="list-disc list-inside text-gray-300 space-y-0 text-[10px]">
+                    <li>Architecture SaaS Rails (API, multi-tenant)</li>
+                    <li>PostgreSQL, optimisation & performance</li>
+                    <li>Sidekiq & Redis (jobs async)</li>
+                    <li>Frontend React et Next.js</li>
+                    <li>Docker et pipelines CI/CD</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Digital College */}
+              <div className="border-2 border-[#C1FF00] rounded-lg overflow-hidden bg-gradient-to-b from-[#C1FF00]/10 to-transparent">
+                <div className="bg-[#C1FF00] px-3 py-1.5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1 items-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">DIGITAL COLLEGE</span>
+                  </div>
+                  <span className="text-xs font-protest text-black leading-none">2024-2025</span>
+                </div>
+                <div className="p-1.5">
+                  <p className="text-[10px] text-gray-400 mb-0.5">Intervenant - Formateur Web Fullstack</p>
+                  <ul className="list-disc list-inside text-gray-300 space-y-0 text-[10px]">
+                    <li>Formation Ruby on Rails, React.js</li>
+                    <li>Bonnes pratiques architecture & API</li>
+                    <li>Déploiement applications web</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* ASSYS */}
+              <div className="border-2 border-[#FF8656] rounded-lg overflow-hidden bg-gradient-to-b from-[#FF8656]/10 to-transparent">
+                <div className="bg-[#FF8656] px-3 py-1.5 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1 items-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">ASSYS - ESN</span>
+                  </div>
+                  <span className="text-xs font-protest text-black leading-none">2017-2020</span>
+                </div>
+                <div className="p-1.5">
+                  <p className="text-[10px] text-gray-400 mb-0.5">Développeur Fullstack</p>
+                  <ul className="list-disc list-inside text-gray-300 space-y-0 text-[10px]">
+                    <li>Fullstack Ruby on Rails / React-Next.js</li>
+                    <li>Conception API Rails</li>
+                    <li>Optimisation PostgreSQL et Redis</li>
+                    <li>Features métier projets clients</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Skills */}
+          <section className="mb-3">
+            <h3 className="font-protest text-lg text-[#FF8656] mb-1.5 border-b border-[#8364FF]/30 pb-1">
+              COMPÉTENCES TECHNIQUES
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-1.5">
+              {/* Backend Window */}
+              <div className="border-2 border-[#8364FF] rounded-lg overflow-hidden bg-gradient-to-b from-[#8364FF]/10 to-transparent">
+                <div className="bg-[#8364FF] px-3 py-1.5 flex items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1 items-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">BACKEND</span>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Ruby on Rails.png" alt="Rails" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Rails</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Ruby.png" alt="Ruby" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Ruby</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Node.js.png" alt="Node.js" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Node.js</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Nest.js.png" alt="Nest.js" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Nest.js</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/PostgresSQL.png" alt="PostgreSQL" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">PostgreSQL</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Redis.png" alt="Redis" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Redis</span>
+                    </div>
+                    {/* <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/sidekiq.png" alt="Sidekiq" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Sidekiq</span>
+                    </div> */}
+                  </div>
+                </div>
+              </div>
+              
+              {/* Frontend Window */}
+              <div className="border-2 border-[#C1FF00] rounded-lg overflow-hidden bg-gradient-to-b from-[#C1FF00]/10 to-transparent">
+                <div className="bg-[#C1FF00] px-3 py-1.5 flex items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1 items-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">FRONTEND</span>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/React.png" alt="React" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">React</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Next.js.png" alt="Next.js" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Next.js</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/TypeScript.png" alt="TypeScript" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">TypeScript</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/TailwindCSS.png" alt="Tailwind" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Tailwind</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/HTML5.png" alt="HTML5" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">HTML5</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/CSS3.png" alt="CSS3" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">CSS3</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* DevOps Window */}
+              <div className="border-2 border-[#FF8656] rounded-lg overflow-hidden bg-gradient-to-b from-[#FF8656]/10 to-transparent">
+                <div className="bg-[#FF8656] px-3 py-1.5 flex items-center">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1 items-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">DEVOPS</span>
+                  </div>
+                </div>
+                <div className="p-4">
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Docker.png" alt="Docker" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Docker</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Kubernetes.png" alt="Kubernetes" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">K8s</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/Git.png" alt="Git" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Git</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/digitalocean.svg" alt="DigitalOcean" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">DigitalOcean</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/heroku.svg" alt="Heroku" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">Heroku</span>
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <div className="w-12 h-12 relative mb-1">
+                        <img src="/images/logos/aws.svg" alt="AWS" className="w-full h-full object-contain" />
+                      </div>
+                      <span className="text-[10px] text-gray-400">AWS</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Formation */}
+          <section className="mb-3">
+            <h3 className="font-protest text-lg text-[#FF8656] mb-1.5 border-b border-[#8364FF]/30 pb-1">
+              FORMATIONS
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+              {/* Master */}
+              <div className="border-2 border-[#C1FF00] rounded-lg overflow-hidden bg-gradient-to-b from-[#C1FF00]/10 to-transparent">
+                <div className="bg-[#C1FF00] px-3 py-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">MASTER</span>
+                  </div>
+                  <span className="text-xs font-protest text-black">2015-2017</span>
+                </div>
+                <div className="p-2">
+                  <h4 className="font-archivo font-bold text-[#C1FF00] text-sm mb-0.5">Master Informatique</h4>
+                  <p className="text-xs text-gray-400">Génie logiciels / architecture logicielle</p>
+                </div>
+              </div>
+
+              {/* Licence */}
+              <div className="border-2 border-[#8364FF] rounded-lg overflow-hidden bg-gradient-to-b from-[#8364FF]/10 to-transparent">
+                <div className="bg-[#8364FF] px-3 py-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">LICENCE (SIL)</span>
+                  </div>
+                  <span className="text-xs font-protest text-black">2014-2015</span>
+                </div>
+                <div className="p-1.5">
+                  <h4 className="font-archivo font-bold text-[#C1FF00] text-xs mb-0.5">IUT de Nantes</h4>
+                  <p className="text-xs text-gray-400">Systèmes informatiques et logiciels</p>
+                </div>
+              </div>
+
+              {/* BTS */}
+              <div className="border-2 border-[#FF8656] rounded-lg overflow-hidden bg-gradient-to-b from-[#FF8656]/10 to-transparent">
+                <div className="bg-[#FF8656] px-3 py-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">BTS (SE)</span>
+                  </div>
+                  <span className="text-xs font-protest text-black">2012-2014</span>
+                </div>
+                <div className="p-1.5">
+                  <h4 className="font-archivo font-bold text-[#C1FF00] text-xs mb-0.5">Livet</h4>
+                  <p className="text-xs text-gray-400">Systèmes électroniques</p>
+                </div>
+              </div>
+
+              {/* Bootcamp */}
+              <div className="border-2 border-[#C1FF00] rounded-lg overflow-hidden bg-gradient-to-b from-[#C1FF00]/10 to-transparent">
+                <div className="bg-[#C1FF00] px-3 py-2 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                    </div>
+                    <span className="font-protest text-xs text-black leading-none">BOOTCAMP</span>
+                  </div>
+                  <span className="text-xs font-protest text-black">2017-2018</span>
+                </div>
+                <div className="p-1.5">
+                  <h4 className="font-archivo font-bold text-[#C1FF00] text-xs mb-0.5">The Hacking Project</h4>
+                  <p className="text-xs text-gray-400">Développeur Fullstack Ruby on Rails</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Langues & Centres d'intérêt */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-1.5">
+            {/* Langues */}
+            <div className="border-2 border-[#8364FF] rounded-lg overflow-hidden bg-gradient-to-b from-[#8364FF]/10 to-transparent">
+              <div className="bg-[#8364FF] px-3 py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                  </div>
+                    <span className="font-protest text-xs text-black leading-none">LANGUES</span>
+                </div>
+              </div>
+              <div className="p-4">
+                <ul className="text-sm text-gray-300 space-y-2">
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">🇫🇷</span>
+                    <span><span className="text-[#C1FF00] font-bold">Français</span> - Langue maternelle</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">🇬🇧</span>
+                    <span><span className="text-[#C1FF00] font-bold">Anglais</span> - Niveau professionnel</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">🇪🇸</span>
+                    <span><span className="text-[#C1FF00] font-bold">Espagnol</span> - Niveau professionnel</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Centres d'intérêt */}
+            <div className="border-2 border-[#FF8656] rounded-lg overflow-hidden bg-gradient-to-b from-[#FF8656]/10 to-transparent">
+              <div className="bg-[#FF8656] px-3 py-2 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                  </div>
+                    <span className="font-protest text-xs text-black leading-none">CENTRES D&apos;INTÉRÊT</span>
+                </div>
+              </div>
+              <div className="p-4">
+                <ul className="text-sm text-gray-300 space-y-2">
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">💻</span>
+                    <span>Technologies</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">📊</span>
+                    <span>Marketing</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">⚽</span>
+                    <span>Sport</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">🍳</span>
+                    <span>Cuisine</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="text-[#C1FF00]">📈</span>
+                    <span>Trading</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Print Styles */}
+      <style jsx global>{`
+        @media print {
+          body {
+            background: white !important;
+          }
+          .print\\:hidden {
+            display: none !important;
+          }
+          .print\\:border-0 {
+            border: 0 !important;
+          }
+        }
+      `}</style>
+    </main>
+  )
+}
