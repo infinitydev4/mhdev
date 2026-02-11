@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Download, Mail, Phone, MapPin, Globe } from 'lucide-react'
+import { Download, Mail, Phone, MapPin, Globe, Github } from 'lucide-react'
 import { Button3D } from '@/components/ui/Button3D'
 import { useRef } from 'react'
 
@@ -147,9 +147,18 @@ export default function CVPage() {
                   <h1 className="font-archivo text-3xl md:text-4xl font-black text-[#C1FF00] mb-1">
                     MOHAMED OULLAMI
                   </h1>
-                  <h2 className="font-protest text-lg md:text-xl text-[#8364FF]">
+                  <h2 className="font-protest text-lg md:text-xl text-[#8364FF] mb-2">
                     Développeur Fullstack Ruby on Rails Confirmé
                   </h2>
+                  <a 
+                    href="https://github.com/homdev" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-gray-300 hover:text-[#C1FF00] transition-colors font-mono"
+                  >
+                    <Github size={16} className="text-[#8364FF]" />
+                    <span>github.com/homdev</span>
+                  </a>
                 </div>
               </div>
 
