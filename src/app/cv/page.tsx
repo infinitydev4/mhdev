@@ -207,13 +207,28 @@ export default function CVPage() {
                 <WindowHeader title="WEBCONCEPTER" variant="violet" rightText="2018-2026"/>
                 <div className="p-1.5">
                   <p className="text-[10px] text-gray-400 mb-0.5 font-mono">Freelance - Développeur Fullstack Ruby on Rails</p>
-                  <ul className="list-disc list-inside text-gray-300 space-y-0 text-[10px] font-mono">
-                    <li>Architecture SaaS Rails (API, multi-tenant)</li>
-                    <li>PostgreSQL, optimisation & performance</li>
-                    <li>Sidekiq & Redis (jobs async)</li>
-                    <li>Frontend React et Next.js</li>
-                    <li>Docker et pipelines CI/CD</li>
-                  </ul>
+                  <div className="space-y-0 text-[10px] font-mono">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Architecture SaaS Rails (API, multi-tenant)</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">PostgreSQL, optimisation & performance</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Sidekiq & Redis (jobs async)</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Frontend React et Next.js</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Docker et pipelines CI/CD</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -222,13 +237,28 @@ export default function CVPage() {
                 <WindowHeader title="DIGITAL COLLEGE" variant="lime" rightText="2024-2025" />
                 <div className="p-1.5">
                   <p className="text-[10px] text-gray-400 mb-0.5 font-mono">Intervenant - Formateur Web Fullstack</p>
-                  <ul className="list-disc list-inside text-gray-300 space-y-0 text-[10px] font-mono">
-                    <li>Formation Ruby on Rails, React.js</li>
-                    <li>Bonnes pratiques architecture & API</li>
-                    <li>TDD, tests automatisés et CI/CD</li>
-                    <li>Accompagnement projets étudiants</li>
-                    <li>Déploiement applications web</li>
-                  </ul>
+                  <div className="space-y-0 text-[10px] font-mono">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Formation Ruby on Rails, React.js</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Bonnes pratiques architecture & API</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">TDD, tests automatisés et CI/CD</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Accompagnement projets étudiants</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Déploiement applications web</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -237,12 +267,24 @@ export default function CVPage() {
                 <WindowHeader title="STEEPLE" variant="orange" rightText="2019-2021" />
                 <div className="p-1.5">
                   <p className="text-[10px] text-gray-400 mb-0.5 font-mono">Développeur Fullstack Ruby on Rails</p>
-                  <ul className="list-disc list-inside text-gray-300 space-y-0 text-[10px] font-mono">
-                    <li>Développement plateforme communication interne</li>
-                    <li>Architecture API REST Rails</li>
-                    <li>Intégrations multi-supports (web, mobile, écran tactile)</li>
-                    <li>Optimisation performance & scalabilité</li>
-                  </ul>
+                  <div className="space-y-0 text-[10px] font-mono">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Développement plateforme communication interne</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Architecture API REST Rails</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Intégrations multi-supports (web, mobile, écran tactile)</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Optimisation performance & scalabilité</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -251,12 +293,24 @@ export default function CVPage() {
                 <WindowHeader title="ASSYS - ESN" variant="violet" rightText="2017-2019" />
                 <div className="p-1.5">
                   <p className="text-[10px] text-gray-400 mb-0.5 font-mono">Développeur Fullstack</p>
-                  <ul className="list-disc list-inside text-gray-300 space-y-0 text-[10px] font-mono">
-                    <li>Fullstack Ruby on Rails / React-Next.js</li>
-                    <li>Conception API Rails</li>
-                    <li>Optimisation PostgreSQL et Redis</li>
-                    <li>Features métier projets clients</li>
-                  </ul>
+                  <div className="space-y-0 text-[10px] font-mono">
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Fullstack Ruby on Rails / React-Next.js</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Conception API Rails</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Optimisation PostgreSQL et Redis</span>
+                    </div>
+                    <div className="flex items-start gap-2">
+                      <span className="text-[#C1FF00] font-bold">•</span>
+                      <span className="text-gray-300">Features métier projets clients</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
