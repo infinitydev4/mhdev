@@ -23,7 +23,7 @@ export default function Home() {
         {/* Scroll Based Velocity */}
         <div className="py-6 md:py-2">
           <VelocityScroll 
-            text="REACT - NEXT.JS - TYPESCRIPT - NODE.JS - REACT NATIVE - TAILWIND - " 
+            text="RUBY ON RAILS - REACT - NEXT.JS - TYPESCRIPT - NODE.JS - REACT NATIVE - TAILWIND - " 
             default_velocity={3}
             className="font-archivo text-4xl md:text-5xl"
           />
