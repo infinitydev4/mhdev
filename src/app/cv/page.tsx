@@ -154,10 +154,10 @@ export default function CVPage() {
                     href="https://github.com/homdev" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-sm text-gray-300 hover:text-[#C1FF00] transition-colors font-mono"
+                    className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-[#C1FF00] transition-colors font-mono"
                   >
-                    <Github size={16} className="text-[#8364FF]" />
-                    <span>github.com/homdev</span>
+                    <Github size={16} className="text-[#8364FF] flex-shrink-0 pdf-github-icon" />
+                    <span className="leading-none">github.com/homdev</span>
                   </a>
                 </div>
               </div>
@@ -562,6 +562,12 @@ export default function CVPage() {
           display: inline-block !important;
           line-height: 10px !important;
           transform: translateY(-3px) !important;
+        }
+
+        .pdf-capture-mode .pdf-github-icon {
+          display: inline-block !important;
+          vertical-align: middle !important;
+          transform: translateY(5px) !important;
         }
 
         @media print {
