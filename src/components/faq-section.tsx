@@ -43,7 +43,7 @@ const faqs = [
     ]
   },
   {
-    question: "POURQUOI CHOISIR UN DÉVELOPPEUR SENIOR ?",
+    question: "POURQUOI CHOISIR UN DÉVELOPPEUR FULLSTACK ?",
     answer: [
       "• Anticipation des problèmes techniques avant qu'ils n'apparaissent",
       "• Code production-ready, robuste et évolutif",
