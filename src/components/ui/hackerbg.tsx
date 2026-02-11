@@ -12,7 +12,7 @@ const HackerBackground: React.FC<HackerBackgroundProps> = ({
   color = "#0F0",
   fontSize = 14,
   className = "",
-  speed = 1,
+  speed = 0.5,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
  
@@ -34,7 +34,8 @@ const HackerBackground: React.FC<HackerBackgroundProps> = ({
     let animationFrameId: number;
  
     const columns = Math.floor(canvas.width / fontSize);
-    const drops: number[] = new Array(columns).fill(1);
+    const maxRows = Math.ceil(canvas.height / fontSize);
+    const drops: number[] = Array.from({ length: columns }, () => Math.floor(Math.random() * maxRows));
  
     const chars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()_+";

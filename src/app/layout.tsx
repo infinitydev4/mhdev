@@ -88,7 +88,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <HackerBackground color="#8364FF" fontSize={8} speed={1} className="opacity-1 bg-transparent" />
+        <HackerBackground color="#8364FF" fontSize={4} speed={0.5} className="opacity-1 bg-transparent" />
         {children}
       </body>
     </html>
