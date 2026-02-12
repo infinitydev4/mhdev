@@ -127,6 +127,7 @@ export default function Hero() {
             loop
             muted
             playsInline
+            preload="auto"
             className="w-full h-full object-contain"
           >
             <source src="/images/mhdev-loop.mp4" type="video/mp4" />

@@ -76,6 +76,8 @@ const TechCard: FC<{ name: string; logo: string; index: number }> = ({ name, log
         alt={name}
         fill
         className="object-contain"
+        sizes="48px"
+        quality={80}
       />
     </div>
     <span className="text-xs font-archivo text-gray-300 group-hover:text-white transition-colors duration-300 text-center">

@@ -7,12 +7,16 @@ const protestRevolution = localFont({
   src: './fonts/ProtestRevolution-Regular.ttf',
   display: 'swap',
   variable: '--font-protest-revolution',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 const archivoBlack = localFont({
   src: './fonts/ArchivoBlack-Regular.ttf',
   display: 'swap',
   variable: '--font-archivo-black',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
@@ -82,8 +86,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={`${protestRevolution.variable} ${archivoBlack.variable}`}>
-      <body className="relative bg-black">
+    <html lang="fr" className={`${protestRevolution.variable} ${archivoBlack.variable}`} suppressHydrationWarning>
+      <body className="relative bg-black" suppressHydrationWarning>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

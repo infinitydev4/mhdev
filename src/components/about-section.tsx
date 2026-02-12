@@ -124,6 +124,8 @@ export default function AboutSection() {
               alt="Mohamed - Développeur Fullstack Ruby on Rails"
               fill
               className="object-contain"
+              priority
+              quality={90}
             />
             <div className="absolute right-4 top-4 flex h-16 w-16 items-center justify-center rounded-full bg-[#FF8656]">
               <Code2 size={24} className="text-white" />

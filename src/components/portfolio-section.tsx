@@ -34,7 +34,7 @@ export default function PortfolioSection() {
           className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
         >
           <AnimatePresence>
-            {displayedProjects.map((project) => (
+            {displayedProjects.map((project, index) => (
               <motion.div
                 key={project.id}
                 layout
@@ -62,6 +62,9 @@ export default function PortfolioSection() {
                         alt={project.title}
                         fill
                         className="object-contain transition-transform duration-500 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        quality={85}
+                        loading={index < 3 ? 'eager' : 'lazy'}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-50" />
                     </div>
