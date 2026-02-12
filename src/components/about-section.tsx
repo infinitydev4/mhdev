@@ -95,9 +95,9 @@ export default function AboutSection() {
               </div>
             </div>
             <p className="text-gray-400">
-              Développeur Fullstack Ruby on Rails confirmé avec plus de 7 ans d'expérience dans la conception 
-              d'applications SaaS performantes. Spécialisé en architecture API-first, optimisation backend et 
-              mise en production de solutions scalables.
+              Lead Developer Ruby on Rails avec 7+ ans d&apos;expérience en architecture SaaS et solutions 
+              scalables. J&apos;intègre l&apos;IA dans mon workflow pour maximiser la productivité tout en 
+              gardant la responsabilité architecturale et la validation du code.
             </p>
             <div className="flex gap-4">
               <div>
@@ -140,43 +140,43 @@ export default function AboutSection() {
           >
             <Terminal className="max-w-full max-h-[500px] border-[#8364FF]/50 bg-black/80">
               <TypingAnimation className="text-[#C1FF00] font-bold text-sm" duration={40}>
-                $ cat bonnes-pratiques.md
+                $ cat expertise.md
               </TypingAnimation>
 
               <AnimatedSpan className="text-[#C1FF00] font-bold text-sm mt-2">
-                &gt; Expert en bonnes pratiques
+                &gt; Lead Developer Ruby on Rails
               </AnimatedSpan>
 
               <AnimatedSpan className="text-gray-300 text-xs mt-1">
-                TDD (Test-Driven Development)
+                Architecture SaaS &amp; API-first
               </AnimatedSpan>
               <AnimatedSpan className="text-gray-300 text-xs">
-                Clean Architecture &amp; SOLID
+                TDD, Clean Code &amp; SOLID
               </AnimatedSpan>
               <AnimatedSpan className="text-gray-300 text-xs">
-                Méthodologies DevOps modernes
+                CI/CD &amp; DevOps moderne
               </AnimatedSpan>
 
               <TypingAnimation className="text-[#8364FF] font-bold text-sm mt-3" duration={40}>
-                $ cat experience-formation.md
+                $ cat workflow-ia.md
               </TypingAnimation>
 
               <AnimatedSpan className="text-[#C1FF00] font-bold text-sm mt-2">
-                &gt; Digital College (2024-2025)
+                &gt; Développement augmenté par l&apos;IA
               </AnimatedSpan>
 
               <AnimatedSpan className="text-gray-300 text-xs mt-1">
-                Formation &amp; mentorat technique
+                Productivité maximisée
               </AnimatedSpan>
               <AnimatedSpan className="text-gray-300 text-xs">
-                Architecture &amp; déploiement
+                Validation humaine garantie
               </AnimatedSpan>
               <AnimatedSpan className="text-gray-300 text-xs">
-                Transmission des bonnes pratiques
+                Responsabilité architecturale
               </AnimatedSpan>
 
               <TypingAnimation className="text-green-400 text-xs mt-3" duration={30}>
-                ✔ Toutes les compétences chargées avec succès.
+                ✔ Workflow optimisé chargé avec succès.
               </TypingAnimation>
             </Terminal>
           </motion.div>

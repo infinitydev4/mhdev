@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar"
 import Hero from "@/components/Hero"
 import AboutSection from "@/components/about-section"
+import AIAdvantageSection from "@/components/ai-advantage-section"
 import TechStackSection from "@/components/tech-stack-section"
 import { VelocityScroll } from "@/components/ui/scroll-based-velocity"
 import Portfolio from "@/components/portfolio-section"
@@ -29,6 +30,7 @@ export default function Home() {
           />
         </div>
         <AboutSection />
+        <AIAdvantageSection />
         <TechStackSection />
         <Portfolio />
         <ProcessSection />
