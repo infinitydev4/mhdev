@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
  
 interface HackerBackgroundProps {
   color?: string;
@@ -15,8 +15,17 @@ const HackerBackground: React.FC<HackerBackgroundProps> = ({
   speed = 0.5,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
- 
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
+    // Delay animation start to improve initial load
+    const timer = setTimeout(() => setIsVisible(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    
     const canvas = canvasRef.current;
     if (!canvas) return;
  
@@ -73,7 +82,7 @@ const HackerBackground: React.FC<HackerBackgroundProps> = ({
       window.removeEventListener("resize", resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [color, fontSize, speed]);
+  }, [color, fontSize, speed, isVisible]);
  
   return (
     <canvas

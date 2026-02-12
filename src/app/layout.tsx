@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import localFont from 'next/font/local'
 import HackerBackground from "@/components/ui/hackerbg";
+import GoogleTagManager from "@/components/GoogleTagManager";
+import GoogleTagManagerNoScript from "@/components/GoogleTagManagerNoScript";
 
 const protestRevolution = localFont({
   src: './fonts/ProtestRevolution-Regular.ttf',
@@ -28,7 +30,13 @@ export const metadata: Metadata = {
   keywords: [
     'développeur fullstack', 'ruby on rails', 'react', 'next.js', 'typescript',
     'postgresql', 'docker', 'kubernetes', 'saas', 'api', 'nantes', 'freelance',
-    'développeur web', 'fullstack developer', 'ruby on rails developer',
+    'développeur web', 'fullstack developer', 'ruby on rails developer', 'react developer', 
+    'next.js developer', 'typescript developer', 'postgresql developer', 'docker developer', 
+    'kubernetes developer', 'saas developer', 'api developer', 'nantes developer', 'freelance developer', 
+    'web developer', 'fullstack developer', 'ruby on rails developer', 'react developer', 
+    'next.js developer', 'typescript developer', 'postgresql developer', 'docker developer', 
+    'kubernetes developer', 'saas developer', 'api developer', 'nantes developer', 'freelance developer',
+    
   ],
   authors: [{ name: 'Mohamed Oullami' }],
   creator: 'Mohamed Oullami',
@@ -75,8 +83,20 @@ const jsonLd = {
     addressCountry: 'FR',
   },
   knowsAbout: [
-    'Ruby on Rails', 'React', 'Next.js', 'TypeScript', 'PostgreSQL',
-    'Docker', 'Kubernetes', 'CI/CD', 'TDD', 'Architecture SaaS',
+    'Développeur Fullstack', 'Développeur Ruby on Rails', 'Développeur react', 'Développeur next.js', 
+    'Développeur typescript', 'Développeur postgresql', 'Développeur docker', 'Développeur kubernetes', 
+    'Développeur ci/cd', 'Développeur tdd', 'Développeur architecture saas', 'Développeur redis', 
+    'Développeur sidekiq', 'Développeur nest.js', 'Développeur node.js', 'Développeur html', 'Développeur css',
+    'Développeur tailwindcss', 'Développeur javascript', 'Développeur typescript', 'Développeur postgresql', 'Développeur docker', 'Développeur kubernetes', 
+    'Freelance', 'Freelance web', 'Freelance web development', 'Freelance web design', 'Freelance web development', 'Freelance web design',
+    'Développeur ci/cd', 'Développeur tdd', 'Développeur architecture saas', 'Développeur redis', 
+    'Développeur sidekiq', 'Développeur nest.js', 'Développeur node.js', 'Développeur html', 'Développeur css',
+    'Développeur tailwindcss', 'Développeur javascript', 'Développeur typescript', 'Développeur postgresql', 'Développeur docker', 'Développeur kubernetes', 
+    'Développeur ci/cd', 'Développeur tdd', 'Développeur architecture saas', 'Développeur redis', 
+    'Développeur sidekiq', 'Développeur nest.js', 'Développeur node.js', 'Développeur html', 'Développeur css',
+    'Lead Developer','Ruby on Rails', 'React', 'Next.js', 'TypeScript', 'PostgreSQL',
+    'Docker', 'Kubernetes', 'CI/CD', 'TDD', 'Architecture SaaS', 
+    'PostgreSQL', 'Redis', 'Sidekiq', 'Nest.js', 'Node.js'
   ],
 }
 
@@ -87,13 +107,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${protestRevolution.variable} ${archivoBlack.variable}`} suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+      </head>
       <body className="relative bg-black" suppressHydrationWarning>
+        <GoogleTagManagerNoScript />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <HackerBackground color="#8364FF" fontSize={4} speed={0.5} className="opacity-1 bg-transparent" />
         {children}
+        <GoogleTagManager />
       </body>
     </html>
   );
