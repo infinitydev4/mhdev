@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Linkedin, Phone, MessageCircle, MessageSquare } from 'lucide-react'
+import { Linkedin, Phone, MessageCircle } from 'lucide-react'
 import { useState } from 'react'
 import { Button3D } from './ui/Button3D'
 import { 

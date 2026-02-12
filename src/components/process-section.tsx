@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { Button3D } from './ui/Button3D'
-import { Linkedin, Phone, MessageCircle, MessageSquare } from 'lucide-react'
+import { Linkedin, Phone, MessageCircle } from 'lucide-react'
 import { useState } from 'react'
 import HyperText from './ui/hyper-text'
 
@@ -142,8 +142,8 @@ export default function ProcessSection() {
           className="mb-16 grid gap-8 md:grid-cols-2 text-center md:text-left"
         >
           <p className="text-gray-400">
-            En tant que développeur fullstack Ruby on Rails confirmé, j'applique une méthodologie
-            rigoureuse basée sur les meilleures pratiques de l'industrie : Clean Architecture, SOLID,
+            En tant que développeur fullstack Ruby on Rails confirmé, j&apos;applique une méthodologie
+            rigoureuse basée sur les meilleures pratiques de l&apos;industrie : Clean Architecture, SOLID,
             TDD et CI/CD.
           </p>
           <p className="text-gray-400">
@@ -181,7 +181,7 @@ export default function ProcessSection() {
           className="text-center"
         >
           <p className="mb-6 text-gray-400">
-            Besoin d'un développeur Ruby on Rails expérimenté ? Discutons de la mission.
+            Besoin d&apos;un développeur Ruby on Rails expérimenté ? Discutons de la mission.
           </p>
           
           <div className="relative inline-block">
