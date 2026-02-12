@@ -101,9 +101,7 @@ export const TypingAnimation = ({
     throw new Error("TypingAnimation: children must be a string. Received:")
   }
 
-  /* eslint-disable @typescript-eslint/no-explicit-any */
-  const MotionComponent = motion(Component as any) as any
-  /* eslint-enable @typescript-eslint/no-explicit-any */
+  const MotionComponent = motion.span
 
   const [displayedText, setDisplayedText] = useState<string>("")
   const [started, setStarted] = useState(false)

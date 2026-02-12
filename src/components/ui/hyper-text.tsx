@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, HTMLMotionProps } from "framer-motion";
+import { motion, HTMLMotionProps } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -74,17 +74,15 @@ export default function HyperText({
       className="flex scale-100 cursor-default overflow-hidden"
       onMouseEnter={triggerAnimation}
     >
-      <AnimatePresence mode="wait">
-        {displayText.map((letter, i) => (
-          <motion.span
-            key={i}
-            className={cn("font-mono", letter === " " ? "w-3" : "", className)}
-            {...framerProps}
-          >
-            {letter.toUpperCase()}
-          </motion.span>
-        ))}
-      </AnimatePresence>
+      {displayText.map((letter, i) => (
+        <motion.span
+          key={i}
+          className={cn("font-mono", letter === " " ? "w-3" : "", className)}
+          {...framerProps}
+        >
+          {letter.toUpperCase()}
+        </motion.span>
+      ))}
     </div>
   );
 }

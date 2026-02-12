@@ -3,6 +3,7 @@
 import { FC, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Button3D } from './ui/Button3D'
 
 type TechStackCategory = {
   id: string
@@ -108,34 +109,28 @@ const TechStackSection: FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false }}
           transition={{ duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="grid grid-cols-3 gap-3 sm:gap-4 max-w-2xl mx-auto mb-12 px-4"
         >
-          {techStacks.map((stack) => (
-            <button
-              key={stack.id}
-              onClick={() => setActiveTab(stack.id)}
-              className={`relative px-8 py-4 font-protest text-lg font-bold transition-all duration-300 ${
-                activeTab === stack.id 
-                  ? 'text-black' 
-                  : 'text-gray-400 hover:text-white'
-              }`}
-            >
-              {activeTab === stack.id && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 rounded-lg"
-                  style={{ backgroundColor: stack.color }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                />
-              )}
-              {activeTab !== stack.id && (
-                <div 
-                  className="absolute inset-0 rounded-lg border-2 border-dashed border-[#8364FF]/30"
-                />
-              )}
-              <span className="relative z-10">{stack.title}</span>
-            </button>
-          ))}
+          {techStacks.map((stack) => {
+            const isActive = activeTab === stack.id
+            const shadowColor = isActive ? stack.color : '#4B5563'
+            
+            return (
+              <Button3D
+                key={stack.id}
+                onClick={() => setActiveTab(stack.id)}
+                className="relative px-3 sm:px-6 py-3 sm:py-4 font-protest text-sm sm:text-base md:text-lg font-bold"
+                style={{
+                  backgroundColor: isActive ? stack.color : '#1F2937',
+                  borderColor: isActive ? stack.color : '#4B5563',
+                  boxShadow: `0 4px 0 ${shadowColor}dd`,
+                  color: isActive ? '#000000' : '#9CA3AF',
+                }}
+              >
+                <span className="relative z-10 block">{stack.title}</span>
+              </Button3D>
+            )
+          })}
         </motion.div>
 
         {/* Content */}

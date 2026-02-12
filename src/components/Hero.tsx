@@ -19,19 +19,19 @@ export default function Hero() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-6xl font-bold tracking-tighter relative"
+            className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter relative"
           >
             <motion.span 
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
               viewport={{ once: true }}
-              className="font-protest text-[#8364FF] block -mb-5 relative z-10"
+              className="font-protest text-[#8364FF] block -mb-3 sm:-mb-5 relative z-10"
             >
               MOHAMED
             </motion.span>
             <HyperText 
-              text="DÉVELOPPEUR"
+              text="DÉVELOPPEUR #"
               className="font-archivo text-[#C1FF00] font-black block relative z-0"
               duration={1000}
               framerProps={{
@@ -43,7 +43,7 @@ export default function Hero() {
             />
             <HyperText 
               text="ROR FULLSTACK"
-              className="font-archivo text-[#C1FF00] font-black block relative z-0"
+              className="font-archivo text-[#C1FF00] font-black block relative z-0 text-3xl sm:text-3xl md:text-6xl"
               duration={1000}
               framerProps={{
                 initial: { opacity: 0, y: 20 },
@@ -133,13 +133,13 @@ export default function Hero() {
             stiffness: 200
           }}
           viewport={{ once: true }}
-          className="absolute -right-4 top-1/2 -translate-y-1/2"
+          className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2"
         >
           <button className="relative group">
             <div className="absolute inset-0 rounded-full bg-[#FF8656] transition-transform group-hover:scale-110" />
-            <div className="relative flex flex-col items-center justify-center w-32 h-32 rounded-full border-2 border-[#FF8656] bg-black text-[#FF8656] transition-colors group-hover:text-white">
-              <span className="font-archivo font-black text-sm">CONTACTEZ</span>
-              <span className="font-archivo font-black text-sm">MOI</span>
+            <div className="relative flex flex-col items-center justify-center w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full border-2 border-[#FF8656] bg-black text-[#FF8656] transition-colors group-hover:text-white">
+              <span className="font-archivo font-black text-[10px] sm:text-xs md:text-sm">CONTACTEZ</span>
+              <span className="font-archivo font-black text-[10px] sm:text-xs md:text-sm">MOI</span>
             </div>
           </button>
         </motion.div>
