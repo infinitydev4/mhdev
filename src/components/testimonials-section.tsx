@@ -10,36 +10,78 @@ import Marquee from './ui/marquee'
 const testimonials = [
   {
     id: 1,
-    location: 'FRANCE PARIS',
-    category: 'website',
+    location: 'ERIC BEHANZIN',
+    category: 'Application Web',
     stars: 5,
-    text: '"Mohamed est rapide et très communicatif. Il a donné d\'excellents conseils sur l\'amélioration des performances de notre site avec une excellente contribution en matière de design. Son utilisation de Figma a été recommandée pour que la phase de mise en œuvre se déroule en douceur. Garanti que vous serez impressionné si vous l\'utilisez !"'
+    text: '"Excellent développeur qui a su écouter les besoins de mon projet, créer un cahier des charges simple et cohérent puis terminer le projet tout en éliminant les bugs existants. Très ouvert et très sympathique. Je le solliciterai certainement pour d\'autres projets."'
   },
   {
     id: 2,
-    location: 'FRANCE LYON',
-    category: 'seo',
+    location: 'NORDINE ABBAS',
+    category: 'Architecture SaaS',
     stars: 5,
-    text: '"Wow ! Ce gars a du talent et de la patience et connaît son métier. Il est tout simplement incroyable. C\'est fou de dire à tout le monde ici à quel point il est bon, parce que dans un moment, il sera tellement occupé qu\'on ne pourra plus faire appel à lui ! Vous savez, c\'est ce genre de qualité ! Avec tout mon respect, je suis reconnaissant de l\'avoir trouvé."'
+    text: '"Mohamed a fait preuve d\'un grand professionnalisme lors de notre collaboration. Tout s\'est parfaitement déroulé, avec une excellente communication, un suivi rigoureux et une grande flexibilité. Je suis pleinement satisfait de son travail et je le recommande vivement."'
   },
   {
     id: 3,
-    location: 'FRANCE MARSEILLE',
-    category: 'landing page',
+    location: 'JIHEN CHAGMA',
+    category: 'Site Web',
     stars: 5,
-    text: '"Mohamed est un excellent communicateur, très professionnel, a effectué le travail très rapidement et a apporté son expertise aux landing pages pour travailler avec moi et le texte que j\'avais écrit. Ma landing page est superbe et j\'étais ravi du travail que Mohamed a fait. Je l\'ai déjà recommandé à un ami."'
+    text: '"Un grand merci à Mohamed pour son travail exceptionnel. La création de notre site web a été fluide, efficace et totalement alignée avec nos attentes. Son sens du détail, sa créativité et sa réactivité sont remarquables."'
   },
   {
     id: 4,
-    location: 'FRANCE BORDEAUX',
-    category: 'website',
+    location: 'CAMÉLIA TAOUSSER',
+    category: 'Refactoring & Performance',
     stars: 5,
-    text: '"Très bon développeur avec un excellent œil pour le design. A la capacité de faire des choses from scratch qui ne peuvent pas être faites avec des thèmes. Facile à travailler avec et toujours disponible pour les réunions en France."'
+    text: '"Prestations de qualité, respect des délais et excellent suivi."'
+  },
+  {
+    id: 5,
+    location: 'BDEDCMARS',
+    category: 'Application Web',
+    stars: 5,
+    text: '"Excellente agence ! WebConcepter a su répondre parfaitement à nos besoins avec professionnalisme et créativité. Équipe réactive, à l\'écoute et force de proposition. Je recommande sans hésitation !"'
+  },
+  {
+    id: 6,
+    location: 'RINED HELALI',
+    category: 'API & Backend',
+    stars: 5,
+    text: '"WebConcepter, une équipe pro et efficace. Expérience au top !"'
+  },
+  {
+    id: 7,
+    location: 'AMENI NEFFATI',
+    category: 'E-commerce',
+    stars: 5,
+    text: '"Nous avons travaillé ensemble pour la création de notre boutique en ligne. Le site est très bien conçu et fonctionnel. Bon rapport qualité prix, je suis globalement satisfaite."'
+  },
+  {
+    id: 8,
+    location: 'OUNI RAED',
+    category: 'Site Web',
+    stars: 5,
+    text: '"Agence professionnelle et réactive, un travail de qualité et un excellent accompagnement. Je recommande !"'
+  },
+  {
+    id: 9,
+    location: 'NARJIS FX',
+    category: 'Application Mobile',
+    stars: 5,
+    text: '"Mohamed est très professionnel et aimable. C\'est quelqu\'un qui connaît son job, un as de l\'informatique. Service rendu dans les temps et avec le sourire. Faites appel à lui, vous ne le regretterez pas !"'
+  },
+  {
+    id: 10,
+    location: 'NMA CHF',
+    category: 'Application PWA',
+    stars: 5,
+    text: '"L\'agence Webconcepter a su me proposer une solution clé en main et en tous points conforme à mes attentes, je recommande vivement !!!"'
   }
 ]
 
-const firstRow = testimonials.slice(0, testimonials.length / 2)
-const secondRow = testimonials.slice(testimonials.length / 2)
+const firstRow = testimonials.slice(0, 5)
+const secondRow = testimonials.slice(5)
 
 const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] }) => {
   return (
