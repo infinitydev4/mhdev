@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Mohamed Oullami
 
-## Getting Started
+Portfolio professionnel de développeur Fullstack Ruby on Rails avec module Blog intégré.
 
-First, run the development server:
+## 🌐 URLs
+
+- **Frontend (Production)** : [https://mhdev.xyz](https://mhdev.xyz)
+- **Backend API** : [https://github.com/infinitydev4/mhdev-backend](https://github.com/infinitydev4/mhdev-backend)
+
+## 🏗️ Architecture
+
+### Frontend (Ce repository)
+- **Framework** : Next.js 15 + React 19
+- **Styling** : TailwindCSS
+- **Animations** : Framer Motion
+- **Déploiement** : Vercel
+- **Analytics** : Google Tag Manager
+
+### Backend (Repository séparé)
+- **Framework** : NestJS 10
+- **Database** : PostgreSQL + TypeORM
+- **Auth** : JWT + Passport
+- **Déploiement** : Railway
+- **Repository** : [mhdev-backend](https://github.com/infinitydev4/mhdev-backend)
+
+## 🚀 Installation Locale
 
 ```bash
+# Cloner le repository
+git clone https://github.com/infinitydev4/mhdev.git
+cd mhdev
+
+# Installer les dépendances
+npm install
+
+# Lancer en développement
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build production
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📦 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Portfolio
+- ✅ Hero section avec vidéo
+- ✅ Section À propos avec terminal animé
+- ✅ Développement augmenté par l'IA (animated beams)
+- ✅ Stack technique (Backend, Frontend, DevOps)
+- ✅ Portfolio de réalisations (9 projets)
+- ✅ Process de développement
+- ✅ Témoignages clients
+- ✅ FAQ
+- ✅ CV téléchargeable en PDF
+- ✅ Contact (LinkedIn, WhatsApp, Téléphone)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Blog (À venir)
+- 🔄 Articles de blog avec CRUD complet
+- 🔄 Catégories et tags
+- 🔄 Système de rôles (Admin, Moderator, User)
+- 🔄 Recherche et filtres avancés
+- 🔄 SEO optimisé
 
-## Learn More
+## 🔧 Stack Technique
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend
+- Next.js 15.5.12
+- React 19.2.4
+- TypeScript 5
+- TailwindCSS 3.4
+- Framer Motion 11
+- Lucide Icons
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Performance
+- PageSpeed Score : 90+
+- Images optimisées (AVIF, WebP)
+- Lazy loading
+- Code splitting
+- Compression Gzip
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### SEO
+- Metadata optimisés
+- Sitemap dynamique
+- Robots.txt
+- Schema.org structured data
+- Open Graph tags
 
-## Deploy on Vercel
+## 📝 Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run dev          # Développement
+npm run build        # Build production
+npm run start        # Démarrer production
+npm run lint         # Linter
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌍 Déploiement
+
+### Frontend (Vercel)
+Le frontend est automatiquement déployé sur Vercel à chaque push sur `main`.
+
+### Backend (Railway)
+Le backend est déployé séparément sur Railway.
+Voir : [mhdev-backend](https://github.com/infinitydev4/mhdev-backend)
+
+## 📞 Contact
+
+**Mohamed Oullami**
+- Portfolio : [https://mhdev.xyz](https://mhdev.xyz)
+- LinkedIn : [Développeur Web Freelance](https://www.linkedin.com/in/développeur-web-freelance/)
+- GitHub : [@homdev](https://github.com/homdev)
+- Email : contact@mhdev.xyz
+
+## 📄 License
+
+© 2026 Mohamed Oullami. Tous droits réservés.
