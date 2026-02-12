@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Brain, Zap, Target, Shield, Code, Sparkles } from 'lucide-react'
+import { Brain, Zap, Target, Code, Sparkles } from 'lucide-react'
 import { useRef, forwardRef } from 'react'
 import { AnimatedBeam } from './ui/animated-beam'
 import { cn } from '@/lib/utils'
