@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageSquare } from 'lucide-react'
+import { Linkedin, Phone, MessageCircle, MessageSquare } from 'lucide-react'
+import { useState } from 'react'
 import { Button3D } from './ui/Button3D'
 import { 
   Accordion, 
@@ -55,6 +56,14 @@ const faqs = [
 ]
 
 export default function FAQSection() {
+  const [isContactOpen, setIsContactOpen] = useState(false)
+
+  const contactButtons = [
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/d%C3%A9veloppeur-web-freelance/', label: 'LinkedIn', color: '#0A66C2' },
+    { icon: Phone, href: 'tel:+33767036848', label: 'Téléphone', color: '#C1FF00' },
+    { icon: MessageCircle, href: 'https://wa.me/33767036848', label: 'WhatsApp', color: '#25D366' },
+  ]
+
   return (
     <section id="contact" className="relative bg-black py-24">
       <div className="container mx-auto px-4">
@@ -120,12 +129,55 @@ export default function FAQSection() {
           viewport={{ once: false }}
           className="mt-16 flex justify-center"
         >
-          <Button3D>
-            <span className="flex items-center gap-2 font-protest">
-              DISCUTONS DE VOTRE PROJET
-              <MessageSquare size={20} className="inline-block" />
-            </span>
-          </Button3D>
+          <div className="relative inline-block">
+            <Button3D onClick={() => setIsContactOpen(!isContactOpen)}>
+              <span className="font-protest">
+                ÉCHANGEONS ENSEMBLE
+              </span>
+            </Button3D>
+
+            {/* Bulles de contact en ligne sous le bouton */}
+            {isContactOpen && (
+              <div className="flex items-center justify-center gap-4 mt-6">
+                {contactButtons.map((button, index) => {
+                  const Icon = button.icon
+
+                  return (
+                    <motion.a
+                      key={button.label}
+                      href={button.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ scale: 0, opacity: 0, y: -20 }}
+                      animate={{ scale: 1, opacity: 1, y: 0 }}
+                      exit={{ scale: 0, opacity: 0, y: -20 }}
+                      transition={{
+                        duration: 0.3,
+                        delay: index * 0.1,
+                        type: "spring",
+                        stiffness: 260,
+                        damping: 20
+                      }}
+                      className="group"
+                    >
+                      <div className="relative">
+                        <div
+                          className="absolute inset-0 rounded-full blur-sm opacity-50 transition-all group-hover:opacity-75 group-hover:blur-md"
+                          style={{ backgroundColor: button.color }}
+                        />
+                        <div
+                          className="relative flex items-center justify-center w-14 h-14 rounded-full border-2 bg-black transition-all group-hover:scale-110"
+                          style={{ borderColor: button.color, color: button.color }}
+                        >
+                          <Icon size={24} className="group-hover:text-white transition-colors" />
+                        </div>
+                      </div>
+                    </motion.a>
+                  )
+                })}
+              </div>
+            )}
+          </div>
         </motion.div>
       </div>
 
