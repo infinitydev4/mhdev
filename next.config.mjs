@@ -24,6 +24,12 @@ const nextConfig = {
         hostname: 'api.nanobananaapi.dev',
         pathname: '/**',
       },
+      // AWS S3 buckets (ex: bucket.s3.region.amazonaws.com)
+      {
+        protocol: 'https',
+        hostname: '**.amazonaws.com',
+        pathname: '/**',
+      },
     ],
   },
   compress: true,

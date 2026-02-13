@@ -17,10 +17,8 @@ export class BlogAPI {
 
     const url = `${API_URL}/articles${params.toString() ? `?${params.toString()}` : ''}`;
     const response = await fetch(url, {
-      // light=true → réponse < 2MB, on peut cacher. Sinon cache: 'no-store' évite l'erreur "items over 2MB"
-      ...(filters?.light
-        ? { next: { revalidate: 60 } }
-        : { cache: 'no-store' as RequestCache }),
+      // cache: 'no-store' évite "items over 2MB can not be cached" (coverImage base64)
+      cache: 'no-store',
     });
 
     if (!response.ok) {

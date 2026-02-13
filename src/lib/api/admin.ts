@@ -160,6 +160,22 @@ export class AdminAPI {
     return handleResponse<Article>(response);
   }
 
+  static async getPresignedUploadUrl(
+    token: string,
+    folder: 'article-covers' | 'avatars' | 'categories',
+    contentType: string,
+  ): Promise<{ uploadUrl: string; publicUrl: string; key: string }> {
+    const response = await fetch(`${API_URL}/upload/presign`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ folder, contentType }),
+    });
+    return handleResponse(response);
+  }
+
   static async generateCoverImage(
     token: string,
     payload: { title: string; excerpt?: string },

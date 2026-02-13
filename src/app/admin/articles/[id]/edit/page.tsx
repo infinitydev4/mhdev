@@ -17,6 +17,7 @@ import { TagSelector } from "@/features/admin/components/TagSelector";
 import { AdminFormField } from "@/features/admin/components/AdminFormField";
 import { AdminFormInput } from "@/features/admin/components/AdminFormInput";
 import { AdminFormTextarea } from "@/features/admin/components/AdminFormTextarea";
+import { AdminCoverImageField } from "@/features/admin/components/AdminCoverImageField";
 import { validateArticleForm } from "@/features/admin/lib/validators";
 import { extractApiError } from "@/features/admin/lib/api-client";
 
@@ -168,13 +169,15 @@ export default function AdminArticleEditPage() {
                   rows={3}
                 />
               </AdminFormField>
-              <AdminFormField label="Image de couverture (URL)">
-                <AdminFormInput
-                  type="url"
-                  value={coverImage}
-                  onChange={(e) => setCoverImage(e.target.value)}
+              <div>
+                <AdminCoverImageField
+                  token={safeToken}
+                  coverImage={coverImage}
+                  setCoverImage={setCoverImage}
+                  title={title}
+                  excerpt={excerpt}
                 />
-              </AdminFormField>
+              </div>
             </div>
 
             <AdminFormField label="Contenu (Markdown)">
