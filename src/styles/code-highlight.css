@@ -1,0 +1,147 @@
+/* Coloration syntaxique personnalisée pour les blocs de code */
+
+/* Réinitialiser les styles par défaut */
+pre code.hljs,
+.hljs {
+  background: transparent !important;
+  padding: 0 !important;
+  color: #e5e7eb !important; /* gray-200 par défaut */
+  display: block !important;
+  overflow-x: auto !important;
+}
+
+/* Commentaires */
+.hljs-comment,
+.hljs-quote {
+  color: #6b7280 !important; /* gray-500 */
+  font-style: italic;
+}
+
+/* Mots-clés (def, class, if, return, etc.) */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-built_in {
+  color: #c678dd !important; /* violet/magenta */
+  font-weight: 600;
+}
+
+/* Chaînes de caractères */
+.hljs-string,
+.hljs-attr,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+  color: #10b981 !important; /* green-500 */
+}
+
+/* Nombres */
+.hljs-number,
+.hljs-literal {
+  color: #f59e0b !important; /* amber-500 */
+}
+
+/* Noms de fonctions et méthodes */
+.hljs-title,
+.hljs-title.function_,
+.hljs-title.class_,
+.hljs-section {
+  color: #61afef !important; /* bleu clair */
+  font-weight: 600;
+}
+
+/* Noms de classes */
+.hljs-class .hljs-title,
+.hljs-type,
+.hljs-title.class_.inherited__ {
+  color: #e5c07b !important; /* jaune/or */
+  font-weight: 600;
+}
+
+/* Variables et attributs */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params {
+  color: #e06c75 !important; /* rouge/rose */
+}
+
+/* Attributs et propriétés */
+.hljs-attribute,
+.hljs-property {
+  color: #d19a66 !important; /* orange */
+}
+
+/* Opérateurs */
+.hljs-operator,
+.hljs-punctuation {
+  color: #9ca3af !important; /* gray-400 */
+}
+
+/* Balises HTML/XML */
+.hljs-tag,
+.hljs-name {
+  color: #8364ff !important; /* violet */
+}
+
+/* Attributs HTML */
+.hljs-attr {
+  color: #c1ff00 !important; /* jaune */
+}
+
+/* Valeurs d'attributs */
+.hljs-string {
+  color: #10b981 !important; /* green-500 */
+}
+
+/* Métadonnées (annotations, decorators) */
+.hljs-meta,
+.hljs-meta-keyword {
+  color: #f59e0b !important; /* amber-500 */
+}
+
+/* Symboles Ruby spécifiques */
+.hljs-symbol,
+.hljs-selector-id,
+.hljs-selector-attr {
+  color: #56b6c2 !important; /* cyan - pour :symbols */
+}
+
+/* Regex */
+.hljs-regexp {
+  color: #14b8a6 !important; /* teal-500 */
+}
+
+/* Instance variables Ruby (@variable) */
+.hljs-variable.language_ {
+  color: #e06c75 !important;
+}
+
+/* Constantes */
+.hljs-name,
+.hljs-title.class_,
+.hljs-built_in {
+  color: #e5c07b !important;
+}
+
+/* Paramètres de fonction */
+.hljs-params {
+  color: #abb2bf !important;
+}
+
+/* Doctypes, annotations */
+.hljs-doctag {
+  color: #c678dd !important;
+}
+
+/* Sélection */
+.hljs::selection,
+.hljs *::selection {
+  background: rgba(131, 100, 255, 0.3);
+}
+
+/* Debug - voir toutes les classes appliquées */
+pre code[class*="language-"],
+pre code.hljs {
+  font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace !important;
+  line-height: 1.5 !important;
+}

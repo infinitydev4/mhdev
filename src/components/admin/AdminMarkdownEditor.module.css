@@ -59,55 +59,125 @@
 }
 
 .editorWrapper :global(.w-md-editor-preview .wmde-markdown) {
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 14px;
-  line-height: 1.6;
+  color: rgb(209 213 219); /* text-gray-300 */
+  font-size: 1.125rem; /* prose-lg */
+  line-height: 1.75; /* leading-relaxed */
 }
 
-.editorWrapper :global(.w-md-editor-preview h1),
-.editorWrapper :global(.w-md-editor-preview h2),
-.editorWrapper :global(.w-md-editor-preview h3) {
+/* Titres - alignés sur ArticleContent */
+.editorWrapper :global(.w-md-editor-preview h1) {
   color: #c1ff00;
-  font-weight: 600;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+  font-weight: 700;
+  font-size: 2.25rem; /* text-4xl */
+  margin-top: 0;
+  margin-bottom: 1.5rem; /* mb-6 */
 }
 
+.editorWrapper :global(.w-md-editor-preview h2) {
+  color: #8364ff;
+  font-weight: 700;
+  font-size: 1.875rem; /* text-3xl */
+  margin-top: 2rem; /* mt-8 */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+.editorWrapper :global(.w-md-editor-preview h3) {
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem; /* text-2xl */
+  margin-top: 1.5rem; /* mt-6 */
+  margin-bottom: 0.75rem; /* mb-3 */
+}
+
+/* Paragraphes */
+.editorWrapper :global(.w-md-editor-preview p) {
+  color: rgb(209 213 219); /* text-gray-300 */
+  line-height: 1.75;
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Liens */
 .editorWrapper :global(.w-md-editor-preview a) {
   color: #8364ff;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-.editorWrapper :global(.w-md-editor-preview code) {
-  background: rgba(131, 100, 255, 0.2);
+.editorWrapper :global(.w-md-editor-preview a:hover) {
   color: #c1ff00;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.9em;
 }
 
+/* Texte en gras */
+.editorWrapper :global(.w-md-editor-preview strong) {
+  color: white;
+  font-weight: 700;
+}
+
+/* Code inline (ex: `200`, `POST`) - aligné sur ArticleContent */
+.editorWrapper :global(.w-md-editor-preview code) {
+  background: rgb(31 41 55) !important; /* bg-gray-800 */
+  color: #c1ff00 !important;
+  padding: 0.125rem 0.5rem !important; /* py-0.5 px-2 */
+  border-radius: 0.25rem !important;
+  font-size: 0.875rem !important; /* text-sm */
+  font-family: ui-monospace, monospace !important;
+  display: inline !important; /* Force inline pour éviter les grandes boîtes */
+  white-space: nowrap !important;
+  line-height: normal !important;
+}
+
+/* Bloc de code (ex: ```code```) - aligné sur ArticleContent */
 .editorWrapper :global(.w-md-editor-preview pre) {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  padding: 12px;
-  overflow-x: auto;
-  margin: 0.75em 0;
+  background: rgb(31 41 55) !important; /* bg-gray-800 */
+  border: 1px solid rgb(55 65 81) !important; /* border-gray-700 */
+  border-radius: 0.75rem !important; /* rounded-xl */
+  padding: 0.75rem 1rem !important; /* py-3 px-4 */
+  overflow-x: auto !important;
+  margin: 1rem 0 !important; /* my-4 */
+  font-size: 0.875rem !important; /* text-sm */
 }
 
 .editorWrapper :global(.w-md-editor-preview pre code) {
-  background: transparent;
-  padding: 0;
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-family: ui-monospace, monospace !important;
+  white-space: pre !important;
+  display: block !important;
 }
 
+/* Citations */
 .editorWrapper :global(.w-md-editor-preview blockquote) {
   border-left: 4px solid #8364ff;
-  padding-left: 1em;
-  color: rgba(255, 255, 255, 0.7);
+  padding-left: 1rem; /* pl-4 */
+  color: rgb(156 163 175); /* text-gray-400 */
   font-style: italic;
+  margin: 1rem 0;
 }
 
-.editorWrapper :global(.w-md-editor-preview ul),
+/* Listes */
+.editorWrapper :global(.w-md-editor-preview ul) {
+  list-style-type: disc;
+  padding-left: 1.5rem; /* pl-6 */
+  color: rgb(209 213 219); /* text-gray-300 */
+  margin: 0.5rem 0;
+}
+
 .editorWrapper :global(.w-md-editor-preview ol) {
-  padding-left: 1.5em;
-  margin: 0.5em 0;
+  list-style-type: decimal;
+  padding-left: 1.5rem; /* pl-6 */
+  color: rgb(209 213 219); /* text-gray-300 */
+  margin: 0.5rem 0;
+}
+
+.editorWrapper :global(.w-md-editor-preview li) {
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+/* Images */
+.editorWrapper :global(.w-md-editor-preview img) {
+  border-radius: 0.75rem; /* rounded-xl */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
+  height: auto;
 }

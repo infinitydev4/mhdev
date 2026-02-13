@@ -3,7 +3,12 @@
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
 import type { Article } from '@/types/blog';
+
+// Import des langages highlight.js
+import 'highlight.js/lib/common';
+import '@/styles/code-highlight.css';
 
 interface ArticleContentProps {
   article: Article;
@@ -20,6 +25,12 @@ export default function ArticleContent({ article }: ArticleContentProps) {
       {/* Article Content (Markdown) */}
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
+        rehypePlugins={[
+          [rehypeHighlight, { 
+            ignoreMissing: true,
+            subset: ['ruby', 'javascript', 'typescript', 'bash', 'json', 'yaml', 'sql']
+          }]
+        ]}
         className="prose prose-invert prose-lg max-w-none
           prose-headings:font-archivo prose-headings:font-bold
           prose-h1:text-4xl prose-h1:text-[#C1FF00] prose-h1:mb-6
@@ -28,7 +39,7 @@ export default function ArticleContent({ article }: ArticleContentProps) {
           prose-p:text-gray-300 prose-p:leading-relaxed prose-p:mb-4
           prose-a:text-[#8364FF] prose-a:no-underline hover:prose-a:text-[#C1FF00] prose-a:transition-colors
           prose-strong:text-white prose-strong:font-bold
-          prose-code:text-[#C1FF00] prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded
+          prose-code:text-[#C1FF00] prose-code:bg-gray-800 prose-code:px-2 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
           prose-pre:bg-gray-800 prose-pre:border prose-pre:border-gray-700 prose-pre:rounded-xl
           prose-blockquote:border-l-4 prose-blockquote:border-[#8364FF] prose-blockquote:pl-4 prose-blockquote:italic prose-blockquote:text-gray-400
           prose-ul:list-disc prose-ul:pl-6 prose-ul:text-gray-300
@@ -38,27 +49,45 @@ export default function ArticleContent({ article }: ArticleContentProps) {
         components={{
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           code({ inline, className, children, ...props }: any) {
-            const codeContent = String(children).replace(/\n$/, '');
-
+            // Code inline (backticks simples)
             if (inline) {
               return (
                 <code
-                  className={`px-2 py-0.5 rounded bg-gray-800 text-[#C1FF00] text-sm ${className ?? ''}`}
+                  className={className ?? ''}
+                  style={{
+                    display: 'inline',
+                    padding: '0.125rem 0.5rem',
+                    borderRadius: '0.25rem',
+                    backgroundColor: 'rgb(31 41 55)',
+                    color: '#C1FF00',
+                    fontSize: '0.875rem',
+                    whiteSpace: 'nowrap',
+                    fontFamily: 'ui-monospace, monospace'
+                  }}
                   {...props}
                 >
-                  {codeContent}
+                  {children}
                 </code>
               );
             }
 
-            // Éviter <pre> car il ne peut pas être dans <p> (erreur hydration).
-            // Utiliser un span en block pour conserver le rendu code block.
+            // Bloc de code (triple backticks) - laisser rehype-highlight gérer la coloration
             return (
-              <span className="my-4 block overflow-x-auto rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-sm">
-                <code className={`block whitespace-pre font-mono ${className ?? ''}`} {...props}>
-                  {codeContent}
-                </code>
-              </span>
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+          },
+          // Wrapper pour les blocs de code
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          pre({ children, ...props }: any) {
+            return (
+              <pre 
+                className="my-4 overflow-x-auto rounded-xl border border-gray-700 bg-gray-800 px-4 py-3 text-sm"
+                {...props}
+              >
+                {children}
+              </pre>
             );
           },
         }}
