@@ -43,6 +43,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       search,
       sortBy: 'publishedAt',
       order: 'DESC',
+      light: true, // Exclut coverImage (base64) → réponse < 2MB pour le cache Next.js
     }),
     BlogAPI.getCategories(),
     BlogAPI.getTags(),

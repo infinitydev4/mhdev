@@ -40,18 +40,25 @@ export default function BlogGrid({ articles, pagination, currentPage }: BlogGrid
             transition={{ delay: index * 0.1 }}
             className="group relative bg-gray-900/50 rounded-2xl overflow-hidden border border-gray-800 hover:border-[#8364FF]/50 transition-all duration-300"
           >
-            {/* Cover Image */}
-            {article.coverImage && (
-              <div className="relative h-48 overflow-hidden">
-                <Image
-                  src={article.coverImage}
-                  alt={article.title}
-                  fill
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
+            {/* Cover Image ou placeholder (mode light exclut coverImage pour < 2MB) */}
+            <div className="relative h-48 overflow-hidden">
+              {article.coverImage ? (
+                <>
+                  <Image
+                    src={article.coverImage}
+                    alt={article.title}
+                    fill
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
+                </>
+              ) : (
+                <div
+                  className="h-full w-full bg-gradient-to-br from-[#8364FF]/20 via-gray-800 to-black"
+                  aria-hidden
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Content */}
             <div className="p-6 space-y-4">

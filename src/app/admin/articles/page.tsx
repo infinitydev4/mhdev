@@ -103,7 +103,7 @@ export default function AdminArticlesPage() {
         description="Gère les articles publiés et prépare tes prochains contenus."
         actions={
           <Link
-            href="/admin"
+            href="/admin/articles/new"
             className="inline-flex items-center gap-2 rounded-full border border-[#C1FF00] bg-[#C1FF00] px-4 py-2 text-xs font-semibold text-black shadow-[0_0_25px_rgba(193,255,0,0.6)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(193,255,0,0.8)]"
           >
             Créer un article

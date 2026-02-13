@@ -34,6 +34,7 @@ export function useArticles(authPresent: boolean): UseArticlesResult {
         limit: DEFAULT_LIMIT,
         sortBy: "createdAt",
         order: "DESC",
+        light: true,
       });
       setArticles(result.data);
     } catch (err) {

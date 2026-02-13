@@ -88,4 +88,6 @@ export interface ArticleFilters {
   limit?: number;
   sortBy?: string;
   order?: 'ASC' | 'DESC';
+  /** Exclut coverImage pour garder la réponse < 2MB (cache Next.js) */
+  light?: boolean | string;
 }

@@ -6,7 +6,7 @@ export class BlogAPI {
   // Articles
   static async getArticles(filters?: ArticleFilters): Promise<PaginatedArticles> {
     const params = new URLSearchParams();
-    
+
     if (filters) {
       Object.entries(filters).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
@@ -17,7 +17,10 @@ export class BlogAPI {
 
     const url = `${API_URL}/articles${params.toString() ? `?${params.toString()}` : ''}`;
     const response = await fetch(url, {
-      next: { revalidate: 60 }, // Cache for 60 seconds
+      // light=true → réponse < 2MB, on peut cacher. Sinon cache: 'no-store' évite l'erreur "items over 2MB"
+      ...(filters?.light
+        ? { next: { revalidate: 60 } }
+        : { cache: 'no-store' as RequestCache }),
     });
 
     if (!response.ok) {
