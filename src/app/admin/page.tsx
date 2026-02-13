@@ -91,7 +91,7 @@ export default function AdminPage() {
               {isSubmitting ? "Connexion..." : "Se connecter"}
             </button>
             <p className="mt-2 text-center text-[11px] text-white/45">
-              Accès réservé : les droits sont gérés par ton backend (RBAC NestJS + Prisma).
+              Accès réservé aux administrateurs et modérateurs.
             </p>
           </form>
       </AdminAuthGate>
