@@ -22,7 +22,8 @@ export class BlogAPI {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to fetch articles');
+      const text = await response.text().catch(() => '');
+      throw new Error(`Failed to fetch articles (${response.status})${text ? `: ${text.slice(0, 100)}` : ''}`);
     }
 
     const result = await response.json();

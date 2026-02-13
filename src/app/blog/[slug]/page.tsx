@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { Article } from '@/types/blog';
 import { BlogAPI } from '@/lib/api/blog';
 import ArticleHeader from '@/components/blog/ArticleHeader';
 import ArticleContent from '@/components/blog/ArticleContent';
@@ -54,15 +55,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     notFound();
   }
 
-  // Fetch related articles (same category)
-  const relatedArticles = article.categoryId
-    ? await BlogAPI.getArticles({
+  // Fetch related articles (same category) - ne pas faire échouer la page si échec
+  let relatedArticles: Article[] = [];
+  if (article.categoryId) {
+    try {
+      const data = await BlogAPI.getArticles({
         categoryId: article.categoryId,
         limit: 3,
         status: 'PUBLISHED',
         light: true,
-      }).then(data => data.data.filter(a => a.id !== article.id).slice(0, 3))
-    : [];
+      });
+      relatedArticles = data.data.filter((a) => a.id !== article.id).slice(0, 3);
+    } catch {
+      relatedArticles = [];
+    }
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
