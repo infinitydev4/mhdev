@@ -18,6 +18,19 @@ import type { GeneratedArticle } from "@/features/admin/hooks/useAIGeneration";
 
 interface AdminArticleFormProps {
   token: string;
+  articleId?: string;
+  initialData?: {
+    title: string;
+    excerpt: string;
+    content: string;
+    coverImage: string;
+    status: ArticleStatus;
+    categoryId?: string;
+    tagIds: string[];
+    metaTitle?: string;
+    metaDescription?: string;
+    metaKeywords?: string;
+  };
 }
 
 const STATUS_OPTIONS: { value: ArticleStatus; label: string }[] = [
@@ -26,19 +39,19 @@ const STATUS_OPTIONS: { value: ArticleStatus; label: string }[] = [
   { value: ArticleStatus.ARCHIVED, label: "Archivé" },
 ] as const;
 
-export function AdminArticleForm({ token }: AdminArticleFormProps) {
+export function AdminArticleForm({ token, articleId, initialData }: AdminArticleFormProps) {
   const { categories, tags, error: taxonomyError } = useTaxonomies(token);
 
-  const [title, setTitle] = useState("");
-  const [excerpt, setExcerpt] = useState("");
-  const [content, setContent] = useState("");
-  const [coverImage, setCoverImage] = useState("");
-  const [status, setStatus] = useState<ArticleStatus>(ArticleStatus.DRAFT);
-  const [categoryId, setCategoryId] = useState<string | undefined>();
-  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
-  const [metaTitle, setMetaTitle] = useState("");
-  const [metaDescription, setMetaDescription] = useState("");
-  const [metaKeywords, setMetaKeywords] = useState("");
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [excerpt, setExcerpt] = useState(initialData?.excerpt || "");
+  const [content, setContent] = useState(initialData?.content || "");
+  const [coverImage, setCoverImage] = useState(initialData?.coverImage || "");
+  const [status, setStatus] = useState<ArticleStatus>(initialData?.status || ArticleStatus.DRAFT);
+  const [categoryId, setCategoryId] = useState<string | undefined>(initialData?.categoryId);
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>(initialData?.tagIds || []);
+  const [metaTitle, setMetaTitle] = useState(initialData?.metaTitle || "");
+  const [metaDescription, setMetaDescription] = useState(initialData?.metaDescription || "");
+  const [metaKeywords, setMetaKeywords] = useState(initialData?.metaKeywords || "");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -94,33 +107,54 @@ export function AdminArticleForm({ token }: AdminArticleFormProps) {
 
     setIsSubmitting(true);
     try {
-      await AdminAPI.createArticle(token, {
-        title: title.trim(),
-        content: content.trim(),
-        excerpt: excerpt.trim() || undefined,
+      if (articleId) {
+        // Mode édition
+        await AdminAPI.updateArticle(token, articleId, {
+          title: title.trim(),
+          content: content.trim(),
+          excerpt: excerpt.trim() || undefined,
+          coverImage: coverImage.trim() || undefined,
+          status,
+          categoryId: categoryId || null,
+          tagIds: selectedTagIds,
+          metaTitle: metaTitle.trim() || undefined,
+          metaDescription: metaDescription.trim() || undefined,
+          metaKeywords: metaKeywords.trim() 
+            ? metaKeywords.split(',').map((k) => k.trim()).filter(Boolean)
+            : undefined,
+        });
+        setSuccess("Article mis à jour avec succès.");
+      } else {
+        // Mode création
+        await AdminAPI.createArticle(token, {
+          title: title.trim(),
+          content: content.trim(),
+          excerpt: excerpt.trim() || undefined,
         coverImage: coverImage.trim() || undefined,
         status,
         categoryId: categoryId || undefined,
         tagIds: selectedTagIds.length ? selectedTagIds : undefined,
         metaTitle: metaTitle.trim() || undefined,
         metaDescription: metaDescription.trim() || undefined,
-        metaKeywords: metaKeywords
-          .split(',')
-          .map((k) => k.trim())
-          .filter(Boolean),
-      });
-
-      setSuccess("Article créé avec succès.");
-      setTitle("");
-      setExcerpt("");
-      setContent("");
-      setCoverImage("");
-      setStatus(ArticleStatus.DRAFT);
-      setCategoryId(undefined);
-      setSelectedTagIds([]);
-      setMetaTitle("");
-      setMetaDescription("");
-      setMetaKeywords("");
+          metaKeywords: metaKeywords
+            .split(',')
+            .map((k) => k.trim())
+            .filter(Boolean),
+        });
+        setSuccess("Article créé avec succès.");
+        
+        // Réinitialiser le formulaire uniquement en mode création
+        setTitle("");
+        setExcerpt("");
+        setContent("");
+        setCoverImage("");
+        setStatus(ArticleStatus.DRAFT);
+        setCategoryId(undefined);
+        setSelectedTagIds([]);
+        setMetaTitle("");
+        setMetaDescription("");
+        setMetaKeywords("");
+      }
     } catch (err: unknown) {
       setError(extractApiError(err));
     } finally {
@@ -339,7 +373,7 @@ export function AdminArticleForm({ token }: AdminArticleFormProps) {
               disabled={isSubmitting}
               className="inline-flex items-center gap-2 rounded-full border border-[#C1FF00] bg-[#C1FF00] px-4 py-2 text-xs font-semibold text-black shadow-[0_0_25px_rgba(193,255,0,0.6)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_35px_rgba(193,255,0,0.8)] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isSubmitting ? "Enregistrement..." : "Enregistrer l’article"}
+              {isSubmitting ? "Enregistrement..." : (articleId ? "Mettre à jour l'article" : "Créer l'article")}
             </button>
           </div>
         </div>

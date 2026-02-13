@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import type { StoredAuth } from "@/hooks/useAdminAuth";
 import { AdminAPI } from "@/lib/api/admin";
@@ -47,6 +48,7 @@ function StatCard({
 }
 
 export default function AdminPage() {
+  const router = useRouter();
   const { auth, isReady, login, logout } = useAdminAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +58,13 @@ export default function AdminPage() {
   const { stats, isLoading, error: statsError } = useAdminDashboard(
     Boolean(auth)
   );
+
+  // Forcer un refresh après connexion pour éviter le bug d'affichage
+  useEffect(() => {
+    if (auth && isReady) {
+      router.refresh();
+    }
+  }, [auth, isReady, router]);
 
   const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -77,6 +86,8 @@ export default function AdminPage() {
       };
       login(payload);
       setPassword("");
+      // Forcer un rechargement complet de la page pour éviter le bug d'affichage
+      window.location.reload();
     } catch (err: unknown) {
       setError(extractApiError(err));
     } finally {
@@ -90,50 +101,55 @@ export default function AdminPage() {
 
   if (!auth) {
     return (
-      <AdminAuthGate
-        title="Accès admin blog"
-        description="Connecte-toi avec un compte admin ou modérateur existant."
-      >
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-white/60">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/60 px-3 py-2 text-sm outline-none ring-0 focus:border-[#C1FF00] focus:ring-2 focus:ring-[#C1FF00]/40"
-              placeholder="admin@mhdev.xyz"
-              autoComplete="email"
-            />
+      <main className="min-h-screen bg-gradient-to-br from-black via-[#050816] to-black text-white flex items-center justify-center px-4">
+        <div className="w-full max-w-md rounded-3xl border border-white/10 bg-black/80 p-6 shadow-[0_0_45px_rgba(0,0,0,0.7)] backdrop-blur-xl">
+          <div className="mb-4 text-center">
+            <h1 className="font-archivo text-xl tracking-wide">Accès admin blog</h1>
+            <p className="mt-1 text-sm text-white/60">
+              Connecte-toi avec un compte admin ou modérateur existant.
+            </p>
           </div>
-          <div>
-            <label className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-white/60">
-              Mot de passe
-            </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-xl border border-white/10 bg-black/60 px-3 py-2 text-sm outline-none ring-0 focus:border-[#C1FF00] focus:ring-2 focus:ring-[#C1FF00]/40"
-              placeholder="••••••••"
-              autoComplete="current-password"
-            />
-          </div>
-          {error && <AdminAlert message={error} />}
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="mt-2 flex w-full items-center justify-center rounded-full border border-[#C1FF00] bg-[#C1FF00] px-4 py-2 text-sm font-semibold text-black shadow-[0_0_35px_rgba(193,255,0,0.7)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(193,255,0,0.9)] disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {isSubmitting ? "Connexion..." : "Se connecter"}
-          </button>
-          <p className="mt-2 text-center text-[11px] text-white/45">
-            Accès réservé aux administrateurs et modérateurs.
-          </p>
-        </form>
-      </AdminAuthGate>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <label className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-white/60">
+                Email
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-black/60 px-3 py-2 text-sm outline-none ring-0 focus:border-[#C1FF00] focus:ring-2 focus:ring-[#C1FF00]/40"
+                placeholder="admin@mhdev.xyz"
+                autoComplete="email"
+              />
+            </div>
+            <div>
+              <label className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-white/60">
+                Mot de passe
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-black/60 px-3 py-2 text-sm outline-none ring-0 focus:border-[#C1FF00] focus:ring-2 focus:ring-[#C1FF00]/40"
+                placeholder="••••••••"
+                autoComplete="current-password"
+              />
+            </div>
+            {error && <AdminAlert message={error} />}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="mt-2 flex w-full items-center justify-center rounded-full border border-[#C1FF00] bg-[#C1FF00] px-4 py-2 text-sm font-semibold text-black shadow-[0_0_35px_rgba(193,255,0,0.7)] transition-transform hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(193,255,0,0.9)] disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSubmitting ? "Connexion..." : "Se connecter"}
+            </button>
+            <p className="mt-2 text-center text-[11px] text-white/45">
+              Accès réservé aux administrateurs et modérateurs.
+            </p>
+          </form>
+        </div>
+      </main>
     );
   }
 

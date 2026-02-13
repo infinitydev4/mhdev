@@ -15,19 +15,23 @@ export default function AdminRouteLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { auth } = useAdminAuth();
+  const { auth, isReady } = useAdminAuth();
 
-  // Page de login (/admin exact) : pas de layout wrapper
-  if (pathname === "/admin" && !auth) {
-    return <>{children}</>;
+  // Attendre que l'auth soit initialisée pour éviter le flash de contenu
+  if (!isReady) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-black">
+        <div className="text-sm text-white/60">Chargement...</div>
+      </div>
+    );
   }
 
-  // Utilisateur non connecté sur une sous-route : la page gère l'affichage (AuthGate)
+  // Utilisateur non connecté : pas de layout wrapper (affiche login ou AuthGate)
   if (!auth) {
     return <>{children}</>;
   }
 
-  // Utilisateur connecté : wrapper avec AdminLayout pour les pages authentifiées
+  // Utilisateur connecté : toujours wrapper avec AdminLayout
   return (
     <AdminLayout user={auth.user}>
       {children}
