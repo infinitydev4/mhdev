@@ -67,6 +67,15 @@ export class AdminAPI {
     return handleResponse<Tag[]>(response);
   }
 
+  static async getArticleById(token: string, id: string): Promise<Article> {
+    const response = await fetch(`${API_URL}/articles/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return handleResponse<Article>(response);
+  }
+
   static async createArticle(
     token: string,
     payload: {

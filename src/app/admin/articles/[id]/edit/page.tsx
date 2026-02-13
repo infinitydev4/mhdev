@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import type { Article } from "@/types/blog";
-import { BlogAPI } from "@/lib/api/blog";
+import { AdminAPI } from "@/lib/api/admin";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { AdminArticleForm } from "@/components/admin/AdminArticleForm";
 import { AdminLoadingState } from "@/features/admin/ui/AdminLoadingState";
@@ -23,14 +23,14 @@ export default function AdminArticleEditPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!auth || !params?.id) return;
+    if (!auth || !params?.id || !safeToken) return;
     let cancelled = false;
 
     const load = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await BlogAPI.getArticleById(params.id);
+        const data = await AdminAPI.getArticleById(safeToken, params.id);
         if (!cancelled) {
           setArticle(data);
         }
@@ -45,7 +45,7 @@ export default function AdminArticleEditPage() {
     return () => {
       cancelled = true;
     };
-  }, [auth, params?.id]);
+  }, [auth, params?.id, safeToken]);
 
   if (!isReady) return <AdminLoadingState />;
   if (!auth) return <AdminAuthGate />;
