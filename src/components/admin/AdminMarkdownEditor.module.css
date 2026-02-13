@@ -1,0 +1,113 @@
+/* Admin Markdown Editor - Package amélioré pour la toolbar et le thème sombre */
+
+.editorWrapper {
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* Toolbar - barre d'outils mise en valeur */
+.editorWrapper :global(.w-md-editor-toolbar) {
+  padding: 8px 12px !important;
+  min-height: 48px !important;
+  background: linear-gradient(
+    180deg,
+    rgba(131, 100, 255, 0.08) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  ) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.editorWrapper :global(.w-md-editor-toolbar li > button) {
+  padding: 6px 8px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.editorWrapper :global(.w-md-editor-toolbar li > button:hover),
+.editorWrapper :global(.w-md-editor-toolbar li > button:focus) {
+  background: rgba(193, 255, 0, 0.15) !important;
+  color: #c1ff00 !important;
+}
+
+.editorWrapper :global(.w-md-editor-toolbar-divider) {
+  background: rgba(255, 255, 255, 0.15) !important;
+  margin: 0 6px !important;
+  height: 20px !important;
+}
+
+/* Zone de texte */
+.editorWrapper :global(.w-md-editor-content) {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+.editorWrapper :global(.w-md-editor-text) {
+  padding: 16px !important;
+  font-size: 15px !important;
+  line-height: 1.6 !important;
+}
+
+/* Panneau aperçu live - style du contenu rendu */
+.editorWrapper :global(.w-md-editor-preview) {
+  padding: 16px 20px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.editorWrapper :global(.w-md-editor-preview .wmde-markdown) {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.editorWrapper :global(.w-md-editor-preview h1),
+.editorWrapper :global(.w-md-editor-preview h2),
+.editorWrapper :global(.w-md-editor-preview h3) {
+  color: #c1ff00;
+  font-weight: 600;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.editorWrapper :global(.w-md-editor-preview a) {
+  color: #8364ff;
+}
+
+.editorWrapper :global(.w-md-editor-preview code) {
+  background: rgba(131, 100, 255, 0.2);
+  color: #c1ff00;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.editorWrapper :global(.w-md-editor-preview pre) {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  margin: 0.75em 0;
+}
+
+.editorWrapper :global(.w-md-editor-preview pre code) {
+  background: transparent;
+  padding: 0;
+}
+
+.editorWrapper :global(.w-md-editor-preview blockquote) {
+  border-left: 4px solid #8364ff;
+  padding-left: 1em;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+.editorWrapper :global(.w-md-editor-preview ul),
+.editorWrapper :global(.w-md-editor-preview ol) {
+  padding-left: 1.5em;
+  margin: 0.5em 0;
+}

@@ -42,7 +42,7 @@ export default function BlogHero() {
           </motion.div>
 
           {/* Title */}
-          <h1 className="text-5xl md:text-7xl font-archivo font-bold mb-6">
+          <h1 className="text-5xl md:text-7xl font-archivo font-bold mb-6 flex justify-center">
             <HyperText text="ARTICLES & INSIGHTS" className="text-white" />
           </h1>
 

@@ -30,7 +30,7 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
       {/* Back Button */}
       <Link
         href="/blog"
-        className="absolute top-24 left-4 md:left-8 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md border border-gray-700 hover:border-[#8364FF] transition-all group"
+        className="absolute top-16 left-4 md:left-24 z-20 flex items-center gap-2 px-4 py-2 rounded-full bg-black/50 backdrop-blur-md border border-gray-700 hover:border-[#8364FF] transition-all group"
       >
         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
         <span className="font-protest text-sm">Retour</span>
@@ -71,7 +71,7 @@ export default function ArticleHeader({ article }: ArticleHeaderProps) {
           </div>
 
           {/* Title */}
-          <h1 className="text-4xl md:text-6xl font-archivo font-bold mb-6 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-archivo font-bold mb-6 leading-tight">
             {article.title}
           </h1>
 
