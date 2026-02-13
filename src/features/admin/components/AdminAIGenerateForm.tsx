@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { AdminAPI } from "@/lib/api/admin";
 import { useAIGeneration } from "../hooks/useAIGeneration";
 import { AdminFormField } from "./AdminFormField";
 import { AdminFormInput } from "./AdminFormInput";
 import { AdminAlert } from "../ui/AdminAlert";
+import { extractApiError } from "../lib/api-client";
 import type { GeneratedArticle } from "../hooks/useAIGeneration";
 
 const TONE_OPTIONS = [
@@ -34,6 +36,10 @@ export function AdminAIGenerateForm({
   const [expanded, setExpanded] = useState(!collapsed);
   const [title, setTitle] = useState("");
   const [topic, setTopic] = useState("");
+  const [keywords, setKeywords] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [isSuggesting, setIsSuggesting] = useState(false);
+  const [suggestError, setSuggestError] = useState<string | null>(null);
   const [tone, setTone] = useState("professional");
   const [language, setLanguage] = useState("fr");
   const [generateCoverImage, setGenerateCoverImage] = useState(false);
@@ -42,6 +48,28 @@ export function AdminAIGenerateForm({
     token,
     onSuccess: (data) => onApply(data),
   });
+
+  const handleSuggest = async () => {
+    if (!keywords.trim() || keywords.trim().length < 2) return;
+    setSuggestError(null);
+    setIsSuggesting(true);
+    try {
+      const { suggestions: data } = await AdminAPI.suggestArticleIdeas(token, {
+        keywords: keywords.trim(),
+        language,
+      });
+      setSuggestions(data ?? []);
+    } catch (err) {
+      setSuggestError(extractApiError(err));
+      setSuggestions([]);
+    } finally {
+      setIsSuggesting(false);
+    }
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setTitle(suggestion);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +106,61 @@ export function AdminAIGenerateForm({
           onSubmit={handleSubmit}
           className="border-t border-[#8364FF]/20 px-4 py-4"
         >
+          {/* Suggestions par mots-clés */}
+          <div className="mb-4 space-y-2">
+            <AdminFormField label="Mots-clés pour des idées">
+              <div className="flex flex-wrap gap-2">
+                <AdminFormInput
+                  type="text"
+                  value={keywords}
+                  onChange={(e) => {
+                    setKeywords(e.target.value);
+                    setSuggestError(null);
+                  }}
+                  placeholder="Ex : Ruby on Rails, API, performance"
+                  className="min-w-0 flex-1 sm:min-w-[180px]"
+                />
+                <button
+                  type="button"
+                  onClick={handleSuggest}
+                  disabled={isSuggesting || keywords.trim().length < 2}
+                  className="shrink-0 rounded-full border border-[#8364FF]/50 bg-[#8364FF]/10 px-4 py-2 text-xs font-medium text-[#8364FF] transition-colors hover:bg-[#8364FF]/20 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {isSuggesting ? (
+                    <>
+                      <span className="mr-1.5 inline-block h-3 w-3 animate-spin rounded-full border-2 border-[#8364FF] border-t-transparent" />
+                      Suggestions…
+                    </>
+                  ) : (
+                    "Suggérer 3 idées"
+                  )}
+                </button>
+              </div>
+            </AdminFormField>
+            {suggestError && (
+              <AdminAlert message={suggestError} className="mb-2" />
+            )}
+            {suggestions.length > 0 && (
+              <div className="rounded-xl border border-[#8364FF]/20 bg-black/40 p-3">
+                <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-white/60">
+                  Cliquez pour utiliser comme titre
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {suggestions.map((s, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => handleSuggestionClick(s)}
+                      className="rounded-lg border border-[#8364FF]/40 bg-[#8364FF]/10 px-3 py-2 text-left text-sm text-white transition-colors hover:bg-[#8364FF]/25 hover:border-[#8364FF]/60"
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="mb-3 grid gap-3 sm:grid-cols-2">
             <AdminFormField label="Titre exact (optionnel)">
               <AdminFormInput
@@ -97,7 +180,7 @@ export function AdminAIGenerateForm({
             </AdminFormField>
           </div>
           <p className="mb-3 text-[11px] text-white/50">
-            Indiquez au moins un titre ou un sujet.
+            Indiquez au moins un titre ou un sujet. Utilisez les suggestions ci-dessus ou saisissez directement.
           </p>
 
           <div className="mb-4 flex items-center gap-2">

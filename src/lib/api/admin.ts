@@ -191,6 +191,21 @@ export class AdminAPI {
     return handleResponse(response);
   }
 
+  static async suggestArticleIdeas(
+    token: string,
+    payload: { keywords: string; language?: string },
+  ): Promise<{ suggestions: string[] }> {
+    const response = await fetch(`${API_URL}/ai/suggest-ideas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    });
+    return handleResponse(response);
+  }
+
   static async generateArticleAI(
     token: string,
     payload: {
