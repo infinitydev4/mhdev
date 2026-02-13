@@ -78,7 +78,9 @@ export default function AdminArticleEditPage() {
             tagIds: article.tags.map(({ tag }) => tag.id),
             metaTitle: article.metaTitle,
             metaDescription: article.metaDescription,
-            metaKeywords: article.metaKeywords,
+            metaKeywords: Array.isArray(article.metaKeywords) 
+              ? article.metaKeywords.join(", ") 
+              : article.metaKeywords || "",
           }}
         />
       )}
