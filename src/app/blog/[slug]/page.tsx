@@ -63,7 +63,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         categoryId: article.categoryId,
         limit: 3,
         status: 'PUBLISHED',
-        light: true,
       });
       relatedArticles = data.data.filter((a) => a.id !== article.id).slice(0, 3);
     } catch {

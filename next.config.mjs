@@ -24,7 +24,13 @@ const nextConfig = {
         hostname: 'api.nanobananaapi.dev',
         pathname: '/**',
       },
-      // AWS S3 buckets (ex: bucket.s3.region.amazonaws.com)
+      // AWS S3 bucket spécifique
+      {
+        protocol: 'https',
+        hostname: 'mhdev-bucket.s3.eu-north-1.amazonaws.com',
+        pathname: '/**',
+      },
+      // AWS S3 buckets (wildcard)
       {
         protocol: 'https',
         hostname: '**.amazonaws.com',
