@@ -7,8 +7,6 @@ import remarkGfm from "remark-gfm";
 import type { Article } from "@/types/blog";
 import { BlogAPI } from "@/lib/api/blog";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
-import { AdminLoadingState } from "@/features/admin/ui/AdminLoadingState";
-import { AdminAuthGate } from "@/features/admin/ui/AdminAuthGate";
 import { AdminPageHeader } from "@/features/admin/components/AdminPageHeader";
 import { AdminAlert } from "@/features/admin/ui/AdminAlert";
 import { getArticleStatusLabel } from "@/features/admin/domain/utils";
@@ -16,7 +14,7 @@ import { getArticleStatusLabel } from "@/features/admin/domain/utils";
 export default function AdminArticleDetailPage() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
-  const { auth, isReady } = useAdminAuth();
+  const { auth } = useAdminAuth();
   const [article, setArticle] = useState<Article | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -47,9 +45,6 @@ export default function AdminArticleDetailPage() {
       cancelled = true;
     };
   }, [auth, params?.id]);
-
-  if (!isReady) return <AdminLoadingState />;
-  if (!auth) return <AdminAuthGate />;
 
   return (
     <>

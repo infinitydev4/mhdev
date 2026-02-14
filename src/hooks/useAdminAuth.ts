@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import type { AuthUser } from "@/types/auth";
 import { AdminAPI } from "@/lib/api/admin";
+
+// ─── Types ────────────────────────────────────────────────────
 
 export interface StoredAuth {
   user: AuthUser;
@@ -10,13 +19,38 @@ export interface StoredAuth {
   refreshToken: string;
 }
 
-export function useAdminAuth() {
+interface AdminAuthContextValue {
+  auth: StoredAuth | null;
+  isReady: boolean;
+  login: (payload: StoredAuth) => void;
+  logout: () => void;
+}
+
+// ─── Constants ────────────────────────────────────────────────
+
+const STORAGE_KEY = "mhdev-admin-auth";
+
+// ─── Context ──────────────────────────────────────────────────
+
+const AdminAuthContext = createContext<AdminAuthContextValue | null>(null);
+
+// ─── Provider ─────────────────────────────────────────────────
+
+export { AdminAuthContext };
+
+/**
+ * Hook interne qui gere la logique d'auth (lecture localStorage, login, logout).
+ * Utilise UNIQUEMENT par AdminAuthProvider.
+ */
+export function useAdminAuthProvider(): AdminAuthContextValue {
   const [auth, setAuth] = useState<StoredAuth | null>(null);
   const [isReady, setIsReady] = useState(false);
 
+  // Restaurer l'auth depuis localStorage au mount
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const raw = window.localStorage.getItem("mhdev-admin-auth");
+
+    const raw = window.localStorage.getItem(STORAGE_KEY);
 
     const restore = async () => {
       if (!raw) {
@@ -27,13 +61,14 @@ export function useAdminAuth() {
       try {
         const parsed = JSON.parse(raw) as StoredAuth;
 
-        if (parsed && parsed.user && parsed.accessToken) {
+        if (parsed?.user && parsed?.accessToken) {
           setAuth(parsed);
           setIsReady(true);
           return;
         }
 
-        if (parsed && parsed.accessToken) {
+        // Token present mais pas de user : tenter de recuperer le profil
+        if (parsed?.accessToken) {
           try {
             const profile = await AdminAPI.getProfile(parsed.accessToken);
             const fixed: StoredAuth = {
@@ -42,18 +77,15 @@ export function useAdminAuth() {
               refreshToken: parsed.refreshToken,
             };
             setAuth(fixed);
-            window.localStorage.setItem(
-              "mhdev-admin-auth",
-              JSON.stringify(fixed),
-            );
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(fixed));
           } catch {
-            window.localStorage.removeItem("mhdev-admin-auth");
+            window.localStorage.removeItem(STORAGE_KEY);
           }
         } else {
-          window.localStorage.removeItem("mhdev-admin-auth");
+          window.localStorage.removeItem(STORAGE_KEY);
         }
       } catch {
-        window.localStorage.removeItem("mhdev-admin-auth");
+        window.localStorage.removeItem(STORAGE_KEY);
       } finally {
         setIsReady(true);
       }
@@ -62,20 +94,39 @@ export function useAdminAuth() {
     void restore();
   }, []);
 
-  const login = (payload: StoredAuth) => {
+  const login = useCallback((payload: StoredAuth) => {
     setAuth(payload);
     if (typeof window !== "undefined") {
-      window.localStorage.setItem("mhdev-admin-auth", JSON.stringify(payload));
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     }
-  };
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setAuth(null);
     if (typeof window !== "undefined") {
-      window.localStorage.removeItem("mhdev-admin-auth");
+      window.localStorage.removeItem(STORAGE_KEY);
     }
-  };
+  }, []);
 
-  return { auth, isReady, login, logout };
+  return useMemo(
+    () => ({ auth, isReady, login, logout }),
+    [auth, isReady, login, logout],
+  );
 }
 
+// ─── Consumer Hook ────────────────────────────────────────────
+
+/**
+ * Hook pour acceder a l'etat d'auth admin.
+ * Doit etre utilise dans un composant enfant de AdminAuthProvider.
+ */
+export function useAdminAuth(): AdminAuthContextValue {
+  const context = useContext(AdminAuthContext);
+  if (!context) {
+    throw new Error(
+      "useAdminAuth must be used within an AdminAuthProvider. " +
+        "Wrap your admin layout with <AdminAuthProvider>.",
+    );
+  }
+  return context;
+}

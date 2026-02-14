@@ -6,8 +6,6 @@ import type { Article } from "@/types/blog";
 import { AdminAPI } from "@/lib/api/admin";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { AdminArticleForm } from "@/components/admin/AdminArticleForm";
-import { AdminLoadingState } from "@/features/admin/ui/AdminLoadingState";
-import { AdminAuthGate } from "@/features/admin/ui/AdminAuthGate";
 import { AdminPageHeader } from "@/features/admin/components/AdminPageHeader";
 import { AdminAlert } from "@/features/admin/ui/AdminAlert";
 import { extractApiError } from "@/features/admin/lib/api-client";
@@ -15,7 +13,7 @@ import { extractApiError } from "@/features/admin/lib/api-client";
 export default function AdminArticleEditPage() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
-  const { auth, isReady } = useAdminAuth();
+  const { auth } = useAdminAuth();
   const safeToken = auth?.accessToken ?? "";
 
   const [article, setArticle] = useState<Article | null>(null);
@@ -31,9 +29,7 @@ export default function AdminArticleEditPage() {
       setError(null);
       try {
         const data = await AdminAPI.getArticleById(safeToken, params.id);
-        if (!cancelled) {
-          setArticle(data);
-        }
+        if (!cancelled) setArticle(data);
       } catch (err) {
         if (!cancelled) setError(extractApiError(err));
       } finally {
@@ -46,9 +42,6 @@ export default function AdminArticleEditPage() {
       cancelled = true;
     };
   }, [auth, params?.id, safeToken]);
-
-  if (!isReady) return <AdminLoadingState />;
-  if (!auth) return <AdminAuthGate />;
 
   return (
     <>

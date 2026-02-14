@@ -7,8 +7,6 @@ import type { Article } from "@/types/blog";
 import { AdminAPI } from "@/lib/api/admin";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useArticles } from "@/features/admin/hooks/useArticles";
-import { AdminLoadingState } from "@/features/admin/ui/AdminLoadingState";
-import { AdminAuthGate } from "@/features/admin/ui/AdminAuthGate";
 import { AdminAlert } from "@/features/admin/ui/AdminAlert";
 import { AdminPageHeader } from "@/features/admin/components/AdminPageHeader";
 import {
@@ -19,7 +17,7 @@ import {
 import { extractApiError } from "@/features/admin/lib/api-client";
 
 export default function AdminArticlesPage() {
-  const { auth, isReady } = useAdminAuth();
+  const { auth } = useAdminAuth();
   const {
     articles,
     isLoading,
@@ -93,8 +91,6 @@ export default function AdminArticlesPage() {
     [safeToken, removeArticleFromList]
   );
 
-  if (!isReady) return <AdminLoadingState />;
-  if (!auth) return <AdminAuthGate />;
 
   return (
     <>

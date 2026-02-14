@@ -1,40 +1,47 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { AdminAuthProvider } from "@/components/admin/AdminAuthProvider";
 import { AdminLayout } from "@/components/admin/AdminLayout";
+import { AdminLoadingState } from "@/features/admin/ui/AdminLoadingState";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 
 /**
- * Layout admin : protège les routes enfants (hors /admin login).
- * Les pages individuelles gèrent leur propre état d'auth car le layout
- * s'exécute côté client et ne peut pas rediriger côté serveur sans middleware.
+ * Couche interne qui consomme le contexte d'auth.
+ * Affiche le loader, le login (children nus) ou le layout avec sidebar.
+ */
+function AdminAuthShell({ children }: { children: React.ReactNode }) {
+  const { auth, isReady } = useAdminAuth();
+
+  // Phase 1 : Restauration de l'auth depuis localStorage
+  if (!isReady) {
+    return <AdminLoadingState />;
+  }
+
+  // Phase 2 : Non connecté — affiche la page enfant sans wrapper (login)
+  if (!auth) {
+    return <>{children}</>;
+  }
+
+  // Phase 3 : Connecté — sidebar + header + contenu
+  return (
+    <AdminLayout user={auth.user}>
+      {children}
+    </AdminLayout>
+  );
+}
+
+/**
+ * Layout racine admin.
+ * Le Provider DOIT wrapper le shell pour que useAdminAuth() fonctionne.
  */
 export default function AdminRouteLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
-  const { auth, isReady } = useAdminAuth();
-
-  // Attendre que l'auth soit initialisée pour éviter le flash de contenu
-  if (!isReady) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-black">
-        <div className="text-sm text-white/60">Chargement...</div>
-      </div>
-    );
-  }
-
-  // Utilisateur non connecté : pas de layout wrapper (affiche login ou AuthGate)
-  if (!auth) {
-    return <>{children}</>;
-  }
-
-  // Utilisateur connecté : toujours wrapper avec AdminLayout
   return (
-    <AdminLayout user={auth.user}>
-      {children}
-    </AdminLayout>
+    <AdminAuthProvider>
+      <AdminAuthShell>{children}</AdminAuthShell>
+    </AdminAuthProvider>
   );
 }

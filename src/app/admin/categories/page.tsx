@@ -6,8 +6,6 @@ import type { Category, Tag } from "@/types/blog";
 import { BlogAPI } from "@/lib/api/blog";
 import { AdminAPI } from "@/lib/api/admin";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
-import { AdminLoadingState } from "@/features/admin/ui/AdminLoadingState";
-import { AdminAuthGate } from "@/features/admin/ui/AdminAuthGate";
 import { AdminAlert } from "@/features/admin/ui/AdminAlert";
 import { AdminPageHeader } from "@/features/admin/components/AdminPageHeader";
 import { AdminFormField } from "@/features/admin/components/AdminFormField";
@@ -20,7 +18,7 @@ import { extractApiError } from "@/features/admin/lib/api-client";
 type ActiveTab = "categories" | "tags";
 
 export default function AdminCategoriesPage() {
-  const { auth, isReady } = useAdminAuth();
+  const { auth } = useAdminAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -125,9 +123,6 @@ export default function AdminCategoriesPage() {
       setIsSubmitting(false);
     }
   };
-
-  if (!isReady) return <AdminLoadingState />;
-  if (!auth) return <AdminAuthGate />;
 
   return (
     <>

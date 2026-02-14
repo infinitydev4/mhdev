@@ -1,36 +1,33 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import type { StoredAuth } from "@/hooks/useAdminAuth";
 import { AdminAPI } from "@/lib/api/admin";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
 import { useAdminDashboard } from "@/features/admin/hooks/useAdminDashboard";
-import { AdminLoadingState } from "@/features/admin/ui/AdminLoadingState";
-import { AdminAuthGate } from "@/features/admin/ui/AdminAuthGate";
 import { AdminAlert } from "@/features/admin/ui/AdminAlert";
 import { validateLoginCredentials } from "@/features/admin/lib/validators";
 import { extractApiError } from "@/features/admin/lib/api-client";
 
-function StatCard({
-  label,
-  value,
-  sublabel,
-  accent,
-}: {
+type AccentColor = "purple" | "lime" | "orange" | "cyan";
+
+interface StatCardProps {
   label: string;
   value: number | string;
   sublabel?: string;
-  accent?: "purple" | "lime" | "orange" | "cyan";
-}) {
-  const accentClasses = {
-    purple: "border-[#8364FF]/40 bg-[#8364FF]/5 text-[#8364FF]",
-    lime: "border-[#C1FF00]/40 bg-[#C1FF00]/5 text-[#C1FF00]",
-    orange: "border-[#FF8656]/40 bg-[#FF8656]/5 text-[#FF8656]",
-    cyan: "border-cyan-500/40 bg-cyan-500/5 text-cyan-400",
-  };
-  const c = accent ? accentClasses[accent] : "border-white/10 bg-white/5 text-white";
+  accent?: AccentColor;
+}
+
+const ACCENT_CLASSES: Record<AccentColor, string> = {
+  purple: "border-[#8364FF]/40 bg-[#8364FF]/5 text-[#8364FF]",
+  lime: "border-[#C1FF00]/40 bg-[#C1FF00]/5 text-[#C1FF00]",
+  orange: "border-[#FF8656]/40 bg-[#FF8656]/5 text-[#FF8656]",
+  cyan: "border-cyan-500/40 bg-cyan-500/5 text-cyan-400",
+} as const;
+
+function StatCard({ label, value, sublabel, accent }: StatCardProps) {
+  const c = accent ? ACCENT_CLASSES[accent] : "border-white/10 bg-white/5 text-white";
 
   return (
     <div
@@ -48,8 +45,7 @@ function StatCard({
 }
 
 export default function AdminPage() {
-  const router = useRouter();
-  const { auth, isReady, login, logout } = useAdminAuth();
+  const { auth, login, logout } = useAdminAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,14 +55,7 @@ export default function AdminPage() {
     Boolean(auth)
   );
 
-  // Forcer un refresh après connexion pour éviter le bug d'affichage
-  useEffect(() => {
-    if (auth && isReady) {
-      router.refresh();
-    }
-  }, [auth, isReady, router]);
-
-  const handleLogin = async (event: React.FormEvent) => {
+  const handleLogin = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
 
@@ -86,18 +75,12 @@ export default function AdminPage() {
       };
       login(payload);
       setPassword("");
-      // Forcer un rechargement complet de la page pour éviter le bug d'affichage
-      window.location.reload();
     } catch (err: unknown) {
       setError(extractApiError(err));
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  if (!isReady) {
-    return <AdminLoadingState />;
-  }
+  }, [email, password, login]);
 
   if (!auth) {
     return (

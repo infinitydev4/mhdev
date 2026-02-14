@@ -16,42 +16,84 @@ import { validateArticleForm } from "@/features/admin/lib/validators";
 import { extractApiError } from "@/features/admin/lib/api-client";
 import type { GeneratedArticle } from "@/features/admin/hooks/useAIGeneration";
 
+interface ArticleFormData {
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage: string;
+  status: ArticleStatus;
+  categoryId?: string;
+  tagIds: string[];
+  metaTitle?: string;
+  metaDescription?: string;
+  metaKeywords?: string;
+}
+
 interface AdminArticleFormProps {
   token: string;
   articleId?: string;
-  initialData?: {
-    title: string;
-    excerpt: string;
-    content: string;
-    coverImage: string;
-    status: ArticleStatus;
-    categoryId?: string;
-    tagIds: string[];
-    metaTitle?: string;
-    metaDescription?: string;
-    metaKeywords?: string;
-  };
+  initialData?: ArticleFormData;
 }
 
-const STATUS_OPTIONS: { value: ArticleStatus; label: string }[] = [
+const STATUS_OPTIONS: readonly { value: ArticleStatus; label: string }[] = [
   { value: ArticleStatus.DRAFT, label: "Brouillon" },
   { value: ArticleStatus.PUBLISHED, label: "Publié" },
   { value: ArticleStatus.ARCHIVED, label: "Archivé" },
-] as const;
+];
+
+/** Construit le payload commun pour create/update */
+function buildArticlePayload(fields: {
+  title: string;
+  content: string;
+  excerpt: string;
+  coverImage: string;
+  status: ArticleStatus;
+  categoryId?: string;
+  selectedTagIds: string[];
+  metaTitle: string;
+  metaDescription: string;
+  metaKeywords: string;
+}) {
+  const parsedKeywords = fields.metaKeywords
+    .split(",")
+    .map((k) => k.trim())
+    .filter(Boolean);
+
+  return {
+    title: fields.title.trim(),
+    content: fields.content.trim(),
+    excerpt: fields.excerpt.trim() || undefined,
+    coverImage: fields.coverImage.trim() || undefined,
+    status: fields.status,
+    metaTitle: fields.metaTitle.trim() || undefined,
+    metaDescription: fields.metaDescription.trim() || undefined,
+    metaKeywords: parsedKeywords.length ? parsedKeywords : undefined,
+  };
+}
+
+const INITIAL_FORM_STATE: Omit<ArticleFormData, 'status' | 'tagIds'> = {
+  title: "",
+  excerpt: "",
+  content: "",
+  coverImage: "",
+  metaTitle: "",
+  metaDescription: "",
+  metaKeywords: "",
+};
 
 export function AdminArticleForm({ token, articleId, initialData }: AdminArticleFormProps) {
   const { categories, tags, error: taxonomyError } = useTaxonomies(token);
 
-  const [title, setTitle] = useState(initialData?.title || "");
-  const [excerpt, setExcerpt] = useState(initialData?.excerpt || "");
-  const [content, setContent] = useState(initialData?.content || "");
-  const [coverImage, setCoverImage] = useState(initialData?.coverImage || "");
-  const [status, setStatus] = useState<ArticleStatus>(initialData?.status || ArticleStatus.DRAFT);
+  const [title, setTitle] = useState(initialData?.title ?? "");
+  const [excerpt, setExcerpt] = useState(initialData?.excerpt ?? "");
+  const [content, setContent] = useState(initialData?.content ?? "");
+  const [coverImage, setCoverImage] = useState(initialData?.coverImage ?? "");
+  const [status, setStatus] = useState<ArticleStatus>(initialData?.status ?? ArticleStatus.DRAFT);
   const [categoryId, setCategoryId] = useState<string | undefined>(initialData?.categoryId);
-  const [selectedTagIds, setSelectedTagIds] = useState<string[]>(initialData?.tagIds || []);
-  const [metaTitle, setMetaTitle] = useState(initialData?.metaTitle || "");
-  const [metaDescription, setMetaDescription] = useState(initialData?.metaDescription || "");
-  const [metaKeywords, setMetaKeywords] = useState(initialData?.metaKeywords || "");
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>(initialData?.tagIds ?? []);
+  const [metaTitle, setMetaTitle] = useState(initialData?.metaTitle ?? "");
+  const [metaDescription, setMetaDescription] = useState(initialData?.metaDescription ?? "");
+  const [metaKeywords, setMetaKeywords] = useState(initialData?.metaKeywords ?? "");
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -62,11 +104,11 @@ export function AdminArticleForm({ token, articleId, initialData }: AdminArticle
     [metaDescription],
   );
 
-  const toggleTag = (id: string) => {
+  const toggleTag = useCallback((id: string) => {
     setSelectedTagIds((prev) =>
       prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id],
     );
-  };
+  }, []);
 
   const handleApplyGenerated = useCallback(
     (data: GeneratedArticle) => {
@@ -89,7 +131,20 @@ export function AdminArticleForm({ token, articleId, initialData }: AdminArticle
     [tags]
   );
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const resetForm = useCallback(() => {
+    setTitle(INITIAL_FORM_STATE.title);
+    setExcerpt(INITIAL_FORM_STATE.excerpt);
+    setContent(INITIAL_FORM_STATE.content);
+    setCoverImage(INITIAL_FORM_STATE.coverImage);
+    setStatus(ArticleStatus.DRAFT);
+    setCategoryId(undefined);
+    setSelectedTagIds([]);
+    setMetaTitle(INITIAL_FORM_STATE.metaTitle ?? "");
+    setMetaDescription(INITIAL_FORM_STATE.metaDescription ?? "");
+    setMetaKeywords(INITIAL_FORM_STATE.metaKeywords ?? "");
+  }, []);
+
+  const handleSubmit = useCallback(async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
     setSuccess(null);
@@ -105,62 +160,40 @@ export function AdminArticleForm({ token, articleId, initialData }: AdminArticle
       return;
     }
 
+    const base = buildArticlePayload({
+      title, content, excerpt, coverImage, status,
+      categoryId, selectedTagIds, metaTitle, metaDescription, metaKeywords,
+    });
+
     setIsSubmitting(true);
     try {
       if (articleId) {
-        // Mode édition
         await AdminAPI.updateArticle(token, articleId, {
-          title: title.trim(),
-          content: content.trim(),
-          excerpt: excerpt.trim() || undefined,
-          coverImage: coverImage.trim() || undefined,
-          status,
+          ...base,
           categoryId: categoryId || null,
           tagIds: selectedTagIds,
-          metaTitle: metaTitle.trim() || undefined,
-          metaDescription: metaDescription.trim() || undefined,
-          metaKeywords: metaKeywords.trim() 
-            ? metaKeywords.split(',').map((k) => k.trim()).filter(Boolean)
-            : undefined,
         });
         setSuccess("Article mis à jour avec succès.");
       } else {
-        // Mode création
         await AdminAPI.createArticle(token, {
-          title: title.trim(),
-          content: content.trim(),
-          excerpt: excerpt.trim() || undefined,
-        coverImage: coverImage.trim() || undefined,
-        status,
-        categoryId: categoryId || undefined,
-        tagIds: selectedTagIds.length ? selectedTagIds : undefined,
-        metaTitle: metaTitle.trim() || undefined,
-        metaDescription: metaDescription.trim() || undefined,
-          metaKeywords: metaKeywords
-            .split(',')
-            .map((k) => k.trim())
-            .filter(Boolean),
+          ...base,
+          categoryId: categoryId || undefined,
+          tagIds: selectedTagIds.length ? selectedTagIds : undefined,
+          metaKeywords: base.metaKeywords ?? [],
         });
         setSuccess("Article créé avec succès.");
-        
-        // Réinitialiser le formulaire uniquement en mode création
-        setTitle("");
-        setExcerpt("");
-        setContent("");
-        setCoverImage("");
-        setStatus(ArticleStatus.DRAFT);
-        setCategoryId(undefined);
-        setSelectedTagIds([]);
-        setMetaTitle("");
-        setMetaDescription("");
-        setMetaKeywords("");
+        resetForm();
       }
     } catch (err: unknown) {
       setError(extractApiError(err));
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }, [
+    title, content, excerpt, coverImage, status, categoryId,
+    selectedTagIds, metaTitle, metaDescription, metaKeywords,
+    articleId, token, resetForm,
+  ]);
 
   return (
     <motion.section
